@@ -5,5 +5,6 @@ import { webShellFeatureRoutes } from './web-shell.routes';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forRoot(webShellFeatureRoutes)],
+  exports: [RouterModule],
 })
-export class WebShellFeatureModule {}
+export class WebShellModule {}
