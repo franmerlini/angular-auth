@@ -5,8 +5,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'aa-footer',
   standalone: true,
   imports: [CommonModule],
-  template: `<p>web-shell-ui-footer works!</p>`,
-  styles: [],
+  templateUrl: './footer.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent {}
