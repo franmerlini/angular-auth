@@ -22,6 +22,9 @@
       "@angular-auth/web/shell/ui/footer": [
         "libs/web/shell/ui/footer/src/index.ts"
       ],
+      "@angular-auth/web/shell/ui/header": [
+        "libs/web/shell/ui/header/src/index.ts"
+      ],
       "@angular-auth/web/shell/ui/layout": [
         "libs/web/shell/ui/layout/src/index.ts"
       ]
