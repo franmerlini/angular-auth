@@ -1,2 +1,2 @@
-export * from './lib/web-home.module';
-export * from './lib/web-home.routes';
+export * from './lib/home.module';
+export * from './lib/home.routes';

@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { webHomeRoutes } from './web-home.routes';
+import { homeRoutes } from './home.routes';
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(webHomeRoutes)],
+  imports: [CommonModule, RouterModule.forChild(homeRoutes)],
 })
-export class WebHomeModule {}
+export class HomeModule {}
