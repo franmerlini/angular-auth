@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-
-import { WebShellModule } from '@angular-auth/web/shell/feature';
 import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
-  imports: [WebShellModule, RouterModule],
+  imports: [RouterModule],
   selector: 'angular-auth-root',
   template: `<router-outlet />`,
 })
