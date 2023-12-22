@@ -1,16 +1,16 @@
 {
-  "name": "login",
+  "name": "web-auth-ui-login-form",
   "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/web/auth/ui/login/src",
+  "sourceRoot": "libs/web/auth/ui/login-form/src",
   "prefix": "aa",
-  "tags": [],
+  "tags": ["type:ui", "scope:web"],
   "projectType": "library",
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/web/auth/ui/login/jest.config.ts"
+        "jestConfig": "libs/web/auth/ui/login-form/jest.config.ts"
       }
     },
     "lint": {

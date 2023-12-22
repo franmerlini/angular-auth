@@ -15,13 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@angular-auth/libs/web/auth/ui/login-form": [
+        "libs/web/auth/ui/login-form/src/index.ts"
+      ],
+      "@angular-auth/libs/web/auth/ui/register-form": [
+        "libs/web/auth/ui/register-form/src/index.ts"
+      ],
       "@angular-auth/web/auth/feature": ["libs/web/auth/feature/src/index.ts"],
-      "@angular-auth/web/auth/ui/login": [
-        "libs/web/auth/ui/login/src/index.ts"
-      ],
-      "@angular-auth/web/auth/ui/register": [
-        "libs/web/auth/ui/register/src/index.ts"
-      ],
       "@angular-auth/web/home/feature": ["libs/web/home/feature/src/index.ts"],
       "@angular-auth/web/shell/feature": [
         "libs/web/shell/feature/src/index.ts"

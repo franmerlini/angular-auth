@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'register',
+  displayName: 'web-auth-ui-login-form',
   preset: '../../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../../../coverage/libs/web/auth/ui/register',
+  coverageDirectory: '../../../../../coverage/libs/web/auth/ui/login-form',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

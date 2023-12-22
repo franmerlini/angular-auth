@@ -1,16 +1,16 @@
 {
-  "name": "register",
+  "name": "web-auth-ui-register-form",
   "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/web/auth/ui/register/src",
+  "sourceRoot": "libs/web/auth/ui/register-form/src",
   "prefix": "aa",
-  "tags": [],
+  "tags": ["type:ui", "scope:web"],
   "projectType": "library",
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/web/auth/ui/register/jest.config.ts"
+        "jestConfig": "libs/web/auth/ui/register-form/jest.config.ts"
       }
     },
     "lint": {
