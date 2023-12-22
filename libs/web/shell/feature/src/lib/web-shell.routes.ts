@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
 
-import { LoginComponent } from '@angular-auth/web/auth/ui/login';
-import { RegisterComponent } from '@angular-auth/web/auth/ui/register';
+import { LoginComponent } from '@angular-auth/libs/web/auth/feature/login';
+import { RegisterComponent } from '@angular-auth/libs/web/auth/feature/register';
 import { LayoutComponent } from '@angular-auth/web/shell/ui/layout';
 
 export const webShellRoutes: Route[] = [
