@@ -1,1 +1,49 @@
-<p>web-auth-ui-login-form works!</p>
+<div class="flex flex-col items-center gap-8 py-16 px-4">
+  <p class="text-2xl font-bold text-center">
+    Inicia sesión en <span>AngularAuth</span>
+  </p>
+
+  <div class="flex flex-col w-full gap-4">
+    <div class="flex flex-col sm:flex-row gap-4 w-full">
+      <button class="btn flex-shrink w-full">Iniciar sesión con Google</button>
+
+      <button class="btn flex-shrink w-full">Iniciar sesión con Github</button>
+    </div>
+
+    <p>
+      * Al ingresar aceptas los
+      <a class="link link-primary" routerLink="">Términos y condiciones</a>
+    </p>
+  </div>
+
+  <div class="divider">O usa tu correo electrónico</div>
+
+  <form class="flex flex-col gap-4 w-full">
+    <input
+      type="email"
+      placeholder="Correo electrónico"
+      class="input input-bordered w-full"
+    />
+
+    <input
+      type="password"
+      placeholder="Contraseña"
+      class="input input-bordered w-full"
+    />
+
+    <button class="btn btn-primary">Iniciar sesión</button>
+  </form>
+
+  <div class="flex-col gap-4">
+    <p class="text-center">
+      ¿No tienes cuenta?
+      <a class="link link-primary" routerLink="/register">Regístrate</a>
+    </p>
+
+    <p class="text-center">
+      <a class="link link-primary" routerLink="/recover-password">
+        ¿Olvidaste tu contraseña?
+      </a>
+    </p>
+  </div>
+</div>
