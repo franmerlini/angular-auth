@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'aa-register-form',
   standalone: true,
-  imports: [CommonModule],
+  imports: [RouterLink],
   templateUrl: './register-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

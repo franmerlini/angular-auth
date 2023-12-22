@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { RegisterFormComponent } from '@angular-auth/libs/web/auth/ui/register-form';
 
 @Component({
   selector: 'aa-register',
   standalone: true,
-  imports: [RegisterFormComponent],
+  imports: [RegisterFormComponent, RouterLink],
   template: `
-    <div class="flex justify-center items-center">
+    <div class="min-h-screen flex flex-col justify-center items-center">
       <aa-register-form />
     </div>
   `,
