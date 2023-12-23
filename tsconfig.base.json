@@ -40,6 +40,9 @@
       "@angular-auth/libs/web/shared/store": [
         "libs/web/shared/store/src/index.ts"
       ],
+      "@angular-auth/libs/web/shared/utils/app-config": [
+        "libs/web/shared/utils/app-config/src/index.ts"
+      ],
       "@angular-auth/libs/web/shared/utils/app-init": [
         "libs/web/shared/utils/app-init/src/index.ts"
       ],
