@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
+import { AuthStore } from '@angular-auth/libs/web/auth/data-access/store';
 import { LoginFormComponent } from '@angular-auth/libs/web/auth/ui/login-form';
 
 @Component({
@@ -8,9 +9,15 @@ import { LoginFormComponent } from '@angular-auth/libs/web/auth/ui/login-form';
   imports: [LoginFormComponent],
   template: `
     <div class="flex justify-center items-center">
-      <aa-login-form />
+      <aa-login-form (submitForm)="onSubmitForm($event)" />
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {}
+export class LoginComponent {
+  private readonly authStore = inject(AuthStore);
+
+  onSubmitForm({ email, password }: { email: string; password: string }): void {
+    this.authStore.login({ email, password });
+  }
+}
