@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@angular-auth/libs/web/auth/data-access/store": [
+        "libs/web/auth/data-access/store/src/index.ts"
+      ],
       "@angular-auth/libs/web/auth/feature/login": [
         "libs/web/auth/feature/login/src/index.ts"
       ],
