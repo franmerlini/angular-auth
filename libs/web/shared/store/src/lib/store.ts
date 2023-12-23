@@ -1,7 +1,7 @@
 import { ActionReducerMap } from '@ngrx/store';
 
 import { RouterEffects } from './effects/router.effects';
-import * as fromRouter from './reducers/router.reducers';
+import * as fromRouter from './reducers/router.reducer';
 
 interface State {
   [fromRouter.RouterFeatureKey]: fromRouter.State;
