@@ -2,12 +2,14 @@ import { Route } from '@angular/router';
 
 import { LoginComponent } from '@angular-auth/libs/web/auth/feature/login';
 import { RegisterComponent } from '@angular-auth/libs/web/auth/feature/register';
+import { isAuthenticated } from '@angular-auth/libs/web/auth/utils';
 import { LayoutComponent } from '@angular-auth/web/shell/ui/layout';
 
 export const webShellRoutes: Route[] = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [isAuthenticated()],
     children: [
       {
         path: '',
@@ -25,8 +27,7 @@ export const webShellRoutes: Route[] = [
     component: LoginComponent,
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
+    path: '**',
+    redirectTo: '',
   },
 ];
