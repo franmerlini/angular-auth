@@ -13,8 +13,7 @@ import {
   ROOT_REDUCERS,
   RouterFeatureKey,
 } from '@angular-auth/libs/web/shared/data-access/store';
-import { provideAppConfig } from '@angular-auth/libs/web/shared/utils/app-config';
-import { initApp } from '@angular-auth/libs/web/shared/utils/app-init';
+import { initApp, provideAppConfig } from '@angular-auth/libs/web/shared/utils';
 import { webShellRoutes } from '@angular-auth/web/shell/feature';
 import { environment } from '../environments';
 

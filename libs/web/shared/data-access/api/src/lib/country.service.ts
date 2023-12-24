@@ -4,7 +4,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { Country } from '@angular-auth/libs/common';
-import { APP_CONFIG } from '@angular-auth/libs/web/shared/utils/app-config';
+import { APP_CONFIG } from '@angular-auth/libs/web/shared/utils';
 
 const mockedCountries: Country[] = [
   {

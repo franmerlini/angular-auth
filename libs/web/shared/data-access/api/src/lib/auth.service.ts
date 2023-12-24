@@ -4,7 +4,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { CreateUserDTO, User } from '@angular-auth/libs/common';
-import { APP_CONFIG } from '@angular-auth/libs/web/shared/utils/app-config';
+import { APP_CONFIG } from '@angular-auth/libs/web/shared/utils';
 
 const mockedUser: User = {
   id: 1,

@@ -1,4 +1,4 @@
-import { AppConfig } from '@angular-auth/libs/web/shared/utils/app-config';
+import { AppConfig } from '@angular-auth/libs/web/shared/utils';
 
 export const environment: AppConfig = {
   production: false,
