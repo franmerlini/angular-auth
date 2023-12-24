@@ -38,6 +38,9 @@
       "@angular-auth/libs/web/shared/data-access/store": [
         "libs/web/shared/data-access/store/src/index.ts"
       ],
+      "@angular-auth/libs/web/shared/utils": [
+        "libs/web/shared/utils/src/index.ts"
+      ],
       "@angular-auth/libs/web/shared/utils/app-config": [
         "libs/web/shared/utils/app-config/src/index.ts"
       ],
