@@ -33,19 +33,19 @@ dependencies:
     specifier: ~17.0.0
     version: 17.0.1(@angular/core@17.0.2)(rxjs@7.8.1)
   '@ngrx/effects':
-    specifier: 17.0.1
+    specifier: ~17.0.0
     version: 17.0.1(@angular/core@17.0.2)(@ngrx/store@17.0.1)(rxjs@7.8.1)
   '@ngrx/entity':
-    specifier: 17.0.1
+    specifier: ~17.0.0
     version: 17.0.1(@angular/core@17.0.2)(@ngrx/store@17.0.1)(rxjs@7.8.1)
   '@ngrx/router-store':
-    specifier: 17.0.1
+    specifier: ~17.0.0
     version: 17.0.1(@angular/common@17.0.2)(@angular/core@17.0.2)(@angular/router@17.0.2)(@ngrx/store@17.0.1)(rxjs@7.8.1)
   '@ngrx/store':
-    specifier: 17.0.1
+    specifier: ~17.0.0
     version: 17.0.1(@angular/core@17.0.2)(rxjs@7.8.1)
   '@ngrx/store-devtools':
-    specifier: 17.0.1
+    specifier: ~17.0.0
     version: 17.0.1(@ngrx/store@17.0.1)(rxjs@7.8.1)
   '@nx/angular':
     specifier: 17.2.6
@@ -170,6 +170,9 @@ devDependencies:
     specifier: ^29.4.1
     version: 29.7.0(@types/node@18.16.9)(ts-node@10.9.1)
   jest-environment-jsdom:
+    specifier: ^29.4.1
+    version: 29.7.0
+  jest-environment-node:
     specifier: ^29.4.1
     version: 29.7.0
   jest-preset-angular:
