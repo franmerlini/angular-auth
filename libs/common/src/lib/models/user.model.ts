@@ -7,4 +7,6 @@ export type User = {
   email: string;
   city: string;
   country: Country;
+  role: string;
+  token: string;
 };
