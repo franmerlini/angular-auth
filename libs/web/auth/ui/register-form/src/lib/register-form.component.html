@@ -16,18 +16,24 @@
 
   <div class="divider">O usa tu correo electrónico</div>
 
-  <form class="flex flex-col gap-4 w-full">
+  <form
+    [formGroup]="form"
+    class="flex flex-col gap-4 w-full"
+    (submit)="register($event)"
+  >
     <div class="flex flex-col sm:flex-row gap-4">
       <input
         type="text"
         placeholder="Nombre"
         class="input input-bordered w-full sm:w-1/2"
+        formControlName="firstName"
       />
 
       <input
         type="text"
         placeholder="Apellido"
         class="input input-bordered w-full sm:w-1/2"
+        formControlName="lastName"
       />
     </div>
 
@@ -35,6 +41,7 @@
       type="email"
       placeholder="Correo electrónico"
       class="input input-bordered w-full"
+      formControlName="email"
     />
 
     <div class="flex flex-col sm:flex-row gap-4">
@@ -42,12 +49,14 @@
         type="password"
         placeholder="Contraseña"
         class="input input-bordered w-full sm:w-1/2"
+        formControlName="password"
       />
 
       <input
         type="password"
         placeholder="Confirma tu contraseña"
         class="input input-bordered w-full sm:w-1/2"
+        formControlName="confirmPassword"
       />
     </div>
 
@@ -56,18 +65,17 @@
         type="text"
         placeholder="Ciudad"
         class="input input-bordered w-full sm:w-1/2"
+        formControlName="city"
       />
 
-      <select class="select select-bordered w-full sm:w-1/2">
+      <select
+        class="select select-bordered w-full sm:w-1/2"
+        formControlName="country"
+      >
         <option disabled selected>País</option>
-        <option>Argentina</option>
-        <option>Bolivia</option>
-        <option>Brasil</option>
-        <option>Chile</option>
-        <option>Colombia</option>
-        <option>Perú</option>
-        <option>Uruguay</option>
-        <option>Venezuela</option>
+        @for (country of countryList; track country.id) {
+        <option [value]="country.id">{{ country.name }}</option>
+        }
       </select>
     </div>
 
@@ -77,7 +85,7 @@
           Acepto los
           <a class="link link-primary" routerLink="">Términos y condiciones</a>
         </span>
-        <input type="checkbox" class="checkbox" />
+        <input type="checkbox" class="checkbox" formControlName="acceptTerms" />
       </label>
     </div>
 
