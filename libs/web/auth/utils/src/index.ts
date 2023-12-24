@@ -1,1 +1,1 @@
-export * from './lib/guards/is-authenticated.guard';
+export * from './lib/guards';

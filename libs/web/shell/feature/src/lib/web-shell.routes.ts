@@ -1,8 +1,19 @@
 import { Route } from '@angular/router';
 
+import { provideEffects } from '@ngrx/effects';
+import { provideState } from '@ngrx/store';
+
 import { LoginComponent } from '@angular-auth/libs/web/auth/feature/login';
 import { RegisterComponent } from '@angular-auth/libs/web/auth/feature/register';
-import { isAuthenticated } from '@angular-auth/libs/web/auth/utils';
+import {
+  countriesGuard,
+  isAuthenticated,
+} from '@angular-auth/libs/web/auth/utils';
+import { CountryService } from '@angular-auth/libs/web/shared/data-access/api';
+import {
+  CountryEffects,
+  CountryFeature,
+} from '@angular-auth/libs/web/shared/data-access/store';
 import { LayoutComponent } from '@angular-auth/web/shell/ui/layout';
 
 export const webShellRoutes: Route[] = [
@@ -21,6 +32,12 @@ export const webShellRoutes: Route[] = [
   {
     path: 'register',
     component: RegisterComponent,
+    canActivate: [countriesGuard()],
+    providers: [
+      provideState(CountryFeature),
+      provideEffects(CountryEffects),
+      CountryService,
+    ],
   },
   {
     path: 'login',

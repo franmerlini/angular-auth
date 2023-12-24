@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { CreateUserDTO } from '@angular-auth/libs/common';
 import { AuthStore } from '@angular-auth/libs/web/auth/data-access/store';
 import { RegisterFormComponent } from '@angular-auth/libs/web/auth/ui/register-form';
-import { countriesFeature } from '@angular-auth/libs/web/shared/data-access/store';
+import { CountryFeature } from '@angular-auth/libs/web/shared/data-access/store';
 
 @Component({
   selector: 'aa-register',
@@ -29,7 +29,7 @@ export class RegisterComponent {
   private readonly authStore = inject(AuthStore);
   private readonly store = inject(Store);
 
-  countries$ = this.store.select(countriesFeature.selectAll);
+  countries$ = this.store.select(CountryFeature.selectAll);
 
   onRegisterUser(user: CreateUserDTO): void {
     this.authStore.register(user);

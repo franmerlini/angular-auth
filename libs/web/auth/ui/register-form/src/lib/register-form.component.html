@@ -72,9 +72,10 @@
         class="select select-bordered w-full sm:w-1/2"
         formControlName="country"
       >
-        <option disabled selected>País</option>
-        @for (country of countryList; track country.id) {
-        <option [value]="country.id">{{ country.name }}</option>
+        @for (country of countryList; track country.id; let i = $index) {
+        <option [value]="country.id" [selected]="i === 0" [disabled]="i === 0">
+          {{ country.name }}
+        </option>
         }
       </select>
     </div>

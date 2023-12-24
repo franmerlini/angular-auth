@@ -3,8 +3,10 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   inject,
 } from '@angular/core';
 import {
@@ -36,7 +38,7 @@ type RegisterForm = {
   templateUrl: './register-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterFormComponent implements OnInit {
+export class RegisterFormComponent implements OnChanges, OnInit {
   @Input({ required: true }) countryList!: Country[];
 
   @Output() registerUser = new EventEmitter<CreateUserDTO>();
@@ -44,6 +46,16 @@ export class RegisterFormComponent implements OnInit {
   private readonly fb = inject(NonNullableFormBuilder);
 
   form!: FormGroup<RegisterForm>;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['countryList'].currentValue) {
+      this.countryList.unshift({
+        id: 0,
+        name: 'País',
+        code: '',
+      });
+    }
+  }
 
   ngOnInit(): void {
     this.initForm();
