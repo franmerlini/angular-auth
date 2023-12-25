@@ -8,7 +8,7 @@ import { LoginFormComponent } from '@angular-auth/libs/web/auth/ui/login-form';
   standalone: true,
   imports: [LoginFormComponent],
   template: `
-    <div class="flex justify-center items-center">
+    <div class="min-h-screen flex justify-center items-center">
       <aa-login-form (submitForm)="onSubmitForm($event)" />
     </div>
   `,

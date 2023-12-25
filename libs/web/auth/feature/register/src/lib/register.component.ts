@@ -14,7 +14,7 @@ import { CountryFeature } from '@angular-auth/libs/web/shared/data-access/store'
   standalone: true,
   imports: [RegisterFormComponent, RouterLink, AsyncPipe],
   template: `
-    <div class="min-h-screen flex flex-col justify-center items-center">
+    <div class="min-h-screen flex justify-center items-center">
       @if (countries$ | async; as countries) {
       <aa-register-form
         [countryList]="countries"
