@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  mysql_db:
+    image: mysql
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mysql_auth
+      MYSQL_USER: devuser
+      MYSQL_PASSWORD: devuser
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --init-file /docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 3306:3306

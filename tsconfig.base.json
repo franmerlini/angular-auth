@@ -17,6 +17,7 @@
     "paths": {
       "@angular-auth/libs/api/auth": ["libs/api/auth/src/index.ts"],
       "@angular-auth/libs/api/core": ["libs/api/core/src/index.ts"],
+      "@angular-auth/libs/api/database": ["libs/api/database/src/index.ts"],
       "@angular-auth/libs/common": ["libs/common/src/index.ts"],
       "@angular-auth/libs/web/auth/data-access/store": [
         "libs/web/auth/data-access/store/src/index.ts"

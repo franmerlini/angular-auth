@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-
-import { configuration } from './config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -9,6 +8,7 @@ import { configuration } from './config';
       isGlobal: true,
       load: [configuration],
     }),
+    TypeOrmModule.forRoot(dataSourceOptions),
   ],
 })
 export class CoreModule {}
