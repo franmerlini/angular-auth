@@ -1,6 +1,6 @@
 import { join } from 'path';
 
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 import configuration from './configuration';
@@ -9,7 +9,7 @@ const {
   db: { type, host, port, username, password, database },
 } = configuration();
 
-export default new DataSource({
+export const dataSourceOptions: DataSourceOptions = {
   type,
   host,
   port,
@@ -24,4 +24,6 @@ export default new DataSource({
   migrationsRun: true,
   logging: false,
   namingStrategy: new SnakeNamingStrategy(),
-});
+};
+
+export const dataSource = new DataSource(dataSourceOptions);

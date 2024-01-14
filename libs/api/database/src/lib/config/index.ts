@@ -1,2 +1,2 @@
 export { default as configuration } from './configuration';
-export { default as dataSource } from './data-source';
+export * from './data-source';

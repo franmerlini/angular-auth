@@ -1,14 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { DatabaseModule } from '@angular-auth/libs/api/database';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [configuration],
-    }),
-    TypeOrmModule.forRoot(dataSourceOptions),
-  ],
+  imports: [DatabaseModule],
 })
 export class CoreModule {}
