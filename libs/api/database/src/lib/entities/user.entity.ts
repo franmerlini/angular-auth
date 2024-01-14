@@ -30,8 +30,8 @@ export class UserEntity implements User {
   @JoinColumn({ name: 'country_id' })
   country!: CountryEntity;
 
-  @Column()
-  role!: string;
+  // @Column()
+  // role!: string;
 
-  token!: string;
+  // token!: string;
 }
