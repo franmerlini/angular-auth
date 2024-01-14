@@ -1,5 +1,11 @@
-import { User } from '../models';
+import { OmitType } from '@nestjs/swagger';
 
-export type CreateUserDTO = Omit<User, 'id' | 'role' | 'token'> & {
-  password: string;
-};
+import { IsNotEmpty, IsString } from 'class-validator';
+
+import { UserDTO } from './user.dto';
+
+export class CreateUserDTO extends OmitType(UserDTO, ['id', 'role', 'token']) {
+  @IsNotEmpty()
+  @IsString()
+  password!: string;
+}
