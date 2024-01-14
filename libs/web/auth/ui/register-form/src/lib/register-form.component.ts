@@ -90,7 +90,7 @@ export class RegisterFormComponent implements OnChanges, OnInit {
       email,
       password,
       city,
-      country: this.countryList.find(({ id }) => id === country) as Country,
+      country: this.countryList.find(({ id }) => id === +country) as Country,
     });
   }
 
