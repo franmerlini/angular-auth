@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 
@@ -13,6 +13,13 @@ async function bootstrap() {
 
   app.setGlobalPrefix(globalPrefix);
   app.enableCors(cors);
+
+  const validationPipe = new ValidationPipe({
+    transformOptions: {
+      enableImplicitConversion: true,
+    },
+  });
+  app.useGlobalPipes(validationPipe);
 
   await app.listen(port);
   Logger.log(
