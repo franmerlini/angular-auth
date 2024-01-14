@@ -15,7 +15,7 @@ export class AuthService {
   private readonly baseURL = `${this.appConfig.baseURL}/auth`;
 
   register(user: CreateUserDTO): Observable<User> {
-    return this.http.post<User>(`${this.baseURL}/register`, { user });
+    return this.http.post<User>(`${this.baseURL}/register`, user);
   }
 
   login(email: string, password: string): Observable<User> {
