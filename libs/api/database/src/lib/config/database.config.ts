@@ -1,5 +1,4 @@
-export default () => ({
-  port: 3000,
+export const databaseConfig = () => ({
   db: {
     type: 'mysql' as const,
     host: 'localhost',

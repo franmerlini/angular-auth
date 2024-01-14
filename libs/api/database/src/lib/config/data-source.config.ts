@@ -1,13 +1,12 @@
-import { join } from 'path';
-
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
-import configuration from './configuration';
+import { CountryEntity, UserEntity } from '../entities';
+import { databaseConfig } from './database.config';
 
 const {
   db: { type, host, port, username, password, database },
-} = configuration();
+} = databaseConfig();
 
 export const dataSourceOptions: DataSourceOptions = {
   type,
@@ -16,10 +15,9 @@ export const dataSourceOptions: DataSourceOptions = {
   username,
   password,
   database,
-  entities: [
-    `${join(process.cwd(), 'src', 'lib', 'entities')}/*.entity{.ts,.js}`,
-  ],
-  migrations: [`${process.cwd()}/migrations/*{.ts,.js}`],
+  // entities: [__dirname + '/lib/entities/**/*.entity{.ts,.js}'],
+  entities: [UserEntity, CountryEntity],
+  migrations: [__dirname + '/migrations/*{.ts,.js}'],
   synchronize: true,
   migrationsRun: true,
   logging: false,

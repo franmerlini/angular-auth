@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 
 import { cors } from '@angular-auth/libs/api/core';
+
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {

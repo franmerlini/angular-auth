@@ -1,1 +1,2 @@
-export { default as cors } from './cors';
+export * from './app.config';
+export * from './cors.config';

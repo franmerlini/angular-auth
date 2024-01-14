@@ -1,2 +1,2 @@
-export { default as configuration } from './configuration';
-export * from './data-source';
+export * from './data-source.config';
+export * from './database.config';
