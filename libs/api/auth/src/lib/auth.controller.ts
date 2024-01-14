@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 
 import { CreateUserDTO, User } from '@angular-auth/libs/common';
 import { AuthService } from './auth.service';
@@ -12,7 +12,7 @@ export class AuthController {
     return this.authService.register(body);
   }
 
-  @Get('login')
+  @Post('login')
   login(@Body() body: { email: string; password: string }): Promise<User> {
     const { email, password } = body;
     return this.authService.login(email, password);
