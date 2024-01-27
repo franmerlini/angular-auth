@@ -24,7 +24,7 @@ export class UserController {
   ) {}
 
   @Get(':id')
-  getUser(@Param('id') id: number): Promise<User> {
+  getUser(@Param('id') id: number): Promise<User | null> {
     return this.userDriverPort.getUser(id);
   }
 

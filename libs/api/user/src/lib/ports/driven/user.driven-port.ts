@@ -6,7 +6,7 @@ export interface UserDrivenPort {
   createUser(user: CreateUserDTO): Promise<User>;
   updateUser(id: number, user: User): Promise<UpdateResult>;
   deleteUser(id: number): Promise<DeleteResult>;
-  getUser(id: number): Promise<User>;
+  getUser(id: number): Promise<User | null>;
   getUsers(): Promise<User[]>;
-  getUserByEmail(email: string): Promise<User>;
+  getUserByEmail(email: string): Promise<User | null>;
 }

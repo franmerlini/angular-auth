@@ -56,31 +56,19 @@ export class UserDrivenAdapter implements UserDrivenPort {
     return await this.userRepository.delete(id);
   }
 
-  async getUser(id: number): Promise<User> {
-    const repoUser = await this.userRepository.findOne({
+  async getUser(id: number): Promise<User | null> {
+    return await this.userRepository.findOne({
       where: { id },
     });
-
-    if (!repoUser) {
-      throw new NotFoundException('User not found.');
-    }
-
-    return repoUser;
   }
 
   async getUsers(): Promise<User[]> {
     return await this.userRepository.find();
   }
 
-  async getUserByEmail(email: string): Promise<User> {
-    const repoUser = await this.userRepository.findOne({
+  async getUserByEmail(email: string): Promise<User | null> {
+    return await this.userRepository.findOne({
       where: { email },
     });
-
-    if (!repoUser) {
-      throw new NotFoundException('User not found.');
-    }
-
-    return repoUser;
   }
 }

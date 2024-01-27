@@ -26,7 +26,7 @@ export class UserService implements UserDriverPort {
     return this.userDrivenPort.deleteUser(id);
   }
 
-  async getUser(id: number): Promise<User> {
+  async getUser(id: number): Promise<User | null> {
     return this.userDrivenPort.getUser(id);
   }
 
@@ -34,7 +34,7 @@ export class UserService implements UserDriverPort {
     return this.userDrivenPort.getUsers();
   }
 
-  async getUserByEmail(email: string): Promise<User> {
+  async getUserByEmail(email: string): Promise<User | null> {
     return this.userDrivenPort.getUserByEmail(email);
   }
 }
