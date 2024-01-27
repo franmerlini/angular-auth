@@ -36,14 +36,14 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/api/database",
-        "command": "typeorm-ts-node-commonjs -d ./src/lib/config/data-source.ts migration:generate ./migrations/init"
+        "command": "typeorm-ts-node-commonjs -d ./src/lib/config/data-source.config.ts migration:generate ./migrations/init"
       }
     },
     "migration:run": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/api/database",
-        "command": "typeorm-ts-node-commonjs -d ./src/lib/config/data-source.ts migration:run"
+        "command": "typeorm-ts-node-commonjs -d ./src/lib/config/data-source.config.ts migration:run"
       }
     }
   },
