@@ -1,59 +1,46 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 
-import { Repository } from 'typeorm';
-
-import { CountryEntity, UserEntity } from '@angular-auth/libs/api/database';
-import { CreateUserDTO } from '@angular-auth/libs/common';
+import { CountryService, UserService } from '@angular-auth/libs/api/user';
+import { CreateUserDTO, User } from '@angular-auth/libs/common';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
-    @InjectRepository(CountryEntity)
-    private readonly countryRepository: Repository<CountryEntity>
+    private readonly userService: UserService,
+    private readonly countryService: CountryService
   ) {}
 
-  async register(user: CreateUserDTO): Promise<UserEntity> {
+  async register(user: CreateUserDTO): Promise<User> {
     try {
       const { email } = user;
       const { id } = user.country;
 
-      const userExists = await this.userRepository.findOne({
-        where: { email },
-      });
+      const existsUser = await this.userService.getUserByEmail(email);
 
-      if (userExists) {
+      if (existsUser) {
         throw new Error('User already exists.');
       }
 
-      const country = await this.countryRepository.findOne({
-        where: { id },
-      });
+      const country = await this.countryService.getCountry(id);
 
       if (!country) {
         throw new Error('Country not found.');
       }
 
-      const newUser = this.userRepository.create({
+      return await this.userService.createUser({
         ...user,
         country,
       });
-
-      return await this.userRepository.save(newUser);
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error as string);
     }
   }
 
-  async login(email: string, password: string): Promise<UserEntity> {
+  async login(email: string, password: string): Promise<User> {
     try {
       console.log(email, password);
 
-      const user = await this.userRepository.findOne({
-        where: { email },
-      });
+      const user = await this.userService.getUserByEmail(email);
 
       if (!user) {
         throw new Error('User not found.');
@@ -61,7 +48,7 @@ export class AuthService {
 
       return user;
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error as string);
     }
   }
 }
