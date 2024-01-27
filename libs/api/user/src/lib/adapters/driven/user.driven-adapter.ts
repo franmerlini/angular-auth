@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 
 import { CreateUserDTO, User } from '@angular-auth/libs/common';
 
@@ -21,90 +21,66 @@ export class UserDrivenAdapter implements UserDrivenPort {
   ) {}
 
   async createUser(user: CreateUserDTO): Promise<User> {
-    try {
-      const repoUser = await this.userRepository.findOne({
-        where: { email: user.email },
-      });
+    const repoUser = await this.userRepository.findOne({
+      where: { email: user.email },
+    });
 
-      if (repoUser) {
-        throw new ConflictException('User already exists.');
-      }
-
-      return await this.userRepository.save(user);
-    } catch (error) {
-      throw new Error(error as string);
+    if (repoUser) {
+      throw new ConflictException('User already exists.');
     }
+
+    return await this.userRepository.save(user);
   }
 
   async updateUser(id: number, user: User): Promise<UpdateResult> {
-    try {
-      const repoUser = await this.userRepository.findOne({
-        where: { id },
-      });
+    const repoUser = await this.userRepository.findOne({
+      where: { id },
+    });
 
-      if (!repoUser) {
-        throw new NotFoundException('User not found.');
-      }
-
-      return await this.userRepository.update(id, user);
-    } catch (error) {
-      throw new Error(error as string);
+    if (!repoUser) {
+      throw new NotFoundException('User not found.');
     }
+
+    return await this.userRepository.update(id, user);
   }
 
-  async deleteUser(id: number): Promise<void> {
-    try {
-      const repoUser = await this.userRepository.findOne({
-        where: { id },
-      });
+  async deleteUser(id: number): Promise<DeleteResult> {
+    const repoUser = await this.userRepository.findOne({
+      where: { id },
+    });
 
-      if (!repoUser) {
-        throw new NotFoundException('User not found.');
-      }
-
-      await this.userRepository.delete(id);
-    } catch (error) {
-      throw new Error(error as string);
+    if (!repoUser) {
+      throw new NotFoundException('User not found.');
     }
+
+    return await this.userRepository.delete(id);
   }
 
   async getUser(id: number): Promise<User> {
-    try {
-      const repoUser = await this.userRepository.findOne({
-        where: { id },
-      });
+    const repoUser = await this.userRepository.findOne({
+      where: { id },
+    });
 
-      if (!repoUser) {
-        throw new NotFoundException('User not found.');
-      }
-
-      return repoUser;
-    } catch (error) {
-      throw new Error(error as string);
+    if (!repoUser) {
+      throw new NotFoundException('User not found.');
     }
+
+    return repoUser;
   }
 
   async getUsers(): Promise<User[]> {
-    try {
-      return await this.userRepository.find();
-    } catch (error) {
-      throw new Error(error as string);
-    }
+    return await this.userRepository.find();
   }
 
   async getUserByEmail(email: string): Promise<User> {
-    try {
-      const repoUser = await this.userRepository.findOne({
-        where: { email },
-      });
+    const repoUser = await this.userRepository.findOne({
+      where: { email },
+    });
 
-      if (!repoUser) {
-        throw new NotFoundException('User not found.');
-      }
-
-      return repoUser;
-    } catch (error) {
-      throw new Error(error as string);
+    if (!repoUser) {
+      throw new NotFoundException('User not found.');
     }
+
+    return repoUser;
   }
 }

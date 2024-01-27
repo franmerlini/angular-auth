@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 import { CountryService, UserService } from '@angular-auth/libs/api/user';
 import { CreateUserDTO, User } from '@angular-auth/libs/common';
@@ -11,44 +15,36 @@ export class AuthService {
   ) {}
 
   async register(user: CreateUserDTO): Promise<User> {
-    try {
-      const { email } = user;
-      const { id } = user.country;
+    const { email } = user;
+    const { id } = user.country;
 
-      const existsUser = await this.userService.getUserByEmail(email);
+    const existsUser = await this.userService.getUserByEmail(email);
 
-      if (existsUser) {
-        throw new Error('User already exists.');
-      }
-
-      const country = await this.countryService.getCountry(id);
-
-      if (!country) {
-        throw new Error('Country not found.');
-      }
-
-      return await this.userService.createUser({
-        ...user,
-        country,
-      });
-    } catch (error) {
-      throw new Error(error as string);
+    if (existsUser) {
+      throw new ConflictException('User already exists.');
     }
+
+    const country = await this.countryService.getCountry(id);
+
+    if (!country) {
+      throw new NotFoundException('Country not found.');
+    }
+
+    return await this.userService.createUser({
+      ...user,
+      country,
+    });
   }
 
   async login(email: string, password: string): Promise<User> {
-    try {
-      console.log(email, password);
+    console.log(email, password);
 
-      const user = await this.userService.getUserByEmail(email);
+    const user = await this.userService.getUserByEmail(email);
 
-      if (!user) {
-        throw new Error('User not found.');
-      }
-
-      return user;
-    } catch (error) {
-      throw new Error(error as string);
+    if (!user) {
+      throw new NotFoundException('User not found.');
     }
+
+    return user;
   }
 }

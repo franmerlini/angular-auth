@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { UpdateResult } from 'typeorm';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 import { Country, CreateCountryDTO } from '@angular-auth/libs/common';
 
@@ -18,66 +18,46 @@ export class CountryDrivenAdapter implements CountryDrivenPort {
   ) {}
 
   async createCountry(country: CreateCountryDTO): Promise<Country> {
-    try {
-      return await this.countryRepository.save(country);
-    } catch (error) {
-      throw new Error(error as string);
-    }
+    return await this.countryRepository.save(country);
   }
 
   async updateCountry(id: number, country: Country): Promise<UpdateResult> {
-    try {
-      const repoCountry = await this.countryRepository.findOne({
-        where: { id },
-      });
+    const repoCountry = await this.countryRepository.findOne({
+      where: { id },
+    });
 
-      if (!repoCountry) {
-        throw new Error('Country not found.');
-      }
-
-      return await this.countryRepository.update(id, country);
-    } catch (error) {
-      throw new Error(error as string);
+    if (!repoCountry) {
+      throw new Error('Country not found.');
     }
+
+    return await this.countryRepository.update(id, country);
   }
 
-  async deleteCountry(id: number): Promise<void> {
-    try {
-      const repoCountry = await this.countryRepository.findOne({
-        where: { id },
-      });
+  async deleteCountry(id: number): Promise<DeleteResult> {
+    const repoCountry = await this.countryRepository.findOne({
+      where: { id },
+    });
 
-      if (!repoCountry) {
-        throw new Error('Country not found.');
-      }
-
-      await this.countryRepository.delete(id);
-    } catch (error) {
-      throw new Error(error as string);
+    if (!repoCountry) {
+      throw new Error('Country not found.');
     }
+
+    return await this.countryRepository.delete(id);
   }
 
   async getCountry(id: number): Promise<Country> {
-    try {
-      const repoCountry = await this.countryRepository.findOne({
-        where: { id },
-      });
+    const repoCountry = await this.countryRepository.findOne({
+      where: { id },
+    });
 
-      if (!repoCountry) {
-        throw new Error('Country not found.');
-      }
-
-      return repoCountry;
-    } catch (error) {
-      throw new Error(error as string);
+    if (!repoCountry) {
+      throw new Error('Country not found.');
     }
+
+    return repoCountry;
   }
 
   async getCountries(): Promise<Country[]> {
-    try {
-      return await this.countryRepository.find();
-    } catch (error) {
-      throw new Error(error as string);
-    }
+    return await this.countryRepository.find();
   }
 }
