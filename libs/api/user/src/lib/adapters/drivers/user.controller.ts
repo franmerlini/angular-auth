@@ -9,7 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 
-import { UpdateResult } from 'typeorm';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 import { CreateUserDTO, User, UserDTO } from '@angular-auth/libs/common';
 
@@ -35,11 +35,7 @@ export class UserController {
 
   @Post()
   createUser(@Body() body: CreateUserDTO): Promise<User> {
-    try {
-      return this.userDriverPort.createUser(body);
-    } catch (error) {
-      throw new Error(error as string);
-    }
+    return this.userDriverPort.createUser(body);
   }
 
   @Put(':id')
@@ -51,7 +47,7 @@ export class UserController {
   }
 
   @Delete(':id')
-  deleteUser(@Param('id') id: number): Promise<void> {
+  deleteUser(@Param('id') id: number): Promise<DeleteResult> {
     return this.userDriverPort.deleteUser(id);
   }
 }

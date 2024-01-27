@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { UpdateResult } from 'typeorm';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 import { Country } from '@angular-auth/libs/common';
 
@@ -22,7 +22,7 @@ export class CountryService implements CountryDriverPort {
     return this.countryDrivenPort.updateCountry(id, country);
   }
 
-  deleteCountry(id: number): Promise<void> {
+  deleteCountry(id: number): Promise<DeleteResult> {
     return this.countryDrivenPort.deleteCountry(id);
   }
 

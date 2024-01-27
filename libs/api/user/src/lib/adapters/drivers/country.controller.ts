@@ -9,7 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 
-import { UpdateResult } from 'typeorm';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 import { Country, CountryDTO } from '@angular-auth/libs/common';
 
@@ -47,7 +47,7 @@ export class CountryController {
   }
 
   @Delete(':id')
-  deleteCountry(@Param('id') id: number): Promise<void> {
+  deleteCountry(@Param('id') id: number): Promise<DeleteResult> {
     return this.countryDriverPort.deleteCountry(id);
   }
 }

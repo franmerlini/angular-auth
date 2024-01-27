@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { UpdateResult } from 'typeorm';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 import { CreateUserDTO, User } from '@angular-auth/libs/common';
 
@@ -22,7 +22,7 @@ export class UserService implements UserDriverPort {
     return this.userDrivenPort.updateUser(id, user);
   }
 
-  async deleteUser(id: number): Promise<void> {
+  async deleteUser(id: number): Promise<DeleteResult> {
     return this.userDrivenPort.deleteUser(id);
   }
 
