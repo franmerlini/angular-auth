@@ -10,7 +10,7 @@ import { APP_CONFIG } from '@angular-auth/libs/web/shared/utils';
 export class CountryService {
   private readonly http = inject(HttpClient);
   private readonly appConfig = inject(APP_CONFIG);
-  private readonly baseURL = `${this.appConfig.baseURL}/countries`;
+  private readonly baseURL = `${this.appConfig.baseURL}/country`;
 
   getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(this.baseURL);
