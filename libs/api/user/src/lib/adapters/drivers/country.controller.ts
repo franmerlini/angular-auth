@@ -9,8 +9,6 @@ import {
   Put,
 } from '@nestjs/common';
 
-import { DeleteResult, UpdateResult } from 'typeorm';
-
 import {
   Country,
   CreateCountryDTO,
@@ -46,12 +44,12 @@ export class CountryController {
   updateCountry(
     @Param('id') id: number,
     @Body() body: UpdateCountryDTO
-  ): Promise<UpdateResult> {
+  ): Promise<Country> {
     return this.countryDriverPort.updateCountry(id, body);
   }
 
   @Delete(':id')
-  deleteCountry(@Param('id') id: number): Promise<DeleteResult> {
+  deleteCountry(@Param('id') id: number): Promise<void> {
     return this.countryDriverPort.deleteCountry(id);
   }
 }

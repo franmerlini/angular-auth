@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
@@ -11,8 +7,6 @@ import { CreateUserDTO, UpdateUserDTO, User } from '@angular-auth/libs/common';
 
 import { UserDrivenPort } from '../../ports';
 
-export const USER_DRIVEN_ADAPTER_TOKEN = 'user-driven-adapter-token';
-
 @Injectable()
 export class UserDrivenAdapter implements UserDrivenPort {
   constructor(
@@ -20,55 +14,37 @@ export class UserDrivenAdapter implements UserDrivenPort {
     private readonly userRepository: Repository<User>
   ) {}
 
-  async createUser(user: CreateUserDTO): Promise<User> {
-    const repoUser = await this.userRepository.findOne({
-      where: { email: user.email },
-    });
-
-    if (repoUser) {
-      throw new ConflictException('User already exists.');
-    }
-
-    return await this.userRepository.save(user);
+  createUser(user: CreateUserDTO): Promise<User> {
+    return this.userRepository.save(user);
   }
 
-  async updateUser(id: number, user: UpdateUserDTO): Promise<UpdateResult> {
-    const repoUser = await this.userRepository.findOne({
-      where: { id },
-    });
-
-    if (!repoUser) {
-      throw new NotFoundException('User not found.');
-    }
-
-    return await this.userRepository.update(id, user);
+  updateUser(id: number, user: UpdateUserDTO): Promise<UpdateResult> {
+    return this.userRepository.update(id, user);
   }
 
-  async deleteUser(id: number): Promise<DeleteResult> {
-    const repoUser = await this.userRepository.findOne({
-      where: { id },
-    });
-
-    if (!repoUser) {
-      throw new NotFoundException('User not found.');
-    }
-
-    return await this.userRepository.delete(id);
+  deleteUser(id: number): Promise<DeleteResult> {
+    return this.userRepository.delete(id);
   }
 
-  async getUser(id: number): Promise<User | null> {
-    return await this.userRepository.findOne({
-      where: { id },
-    });
+  getUser(id: number): Promise<User | null> {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .innerJoinAndSelect('user.country', 'country')
+      .where('user.id = :id', { id })
+      .getOne();
   }
 
-  async getUsers(): Promise<User[]> {
-    return await this.userRepository.find();
+  getUsers(): Promise<User[]> {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .innerJoinAndSelect('user.country', 'country')
+      .getMany();
   }
 
-  async getUserByEmail(email: string): Promise<User | null> {
-    return await this.userRepository.findOne({
-      where: { email },
-    });
+  getUserByEmail(email: string): Promise<User | null> {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .where('user.email = :email', { email })
+      .getOne();
   }
 }

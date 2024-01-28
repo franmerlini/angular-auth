@@ -9,8 +9,6 @@ import {
   Put,
 } from '@nestjs/common';
 
-import { DeleteResult, UpdateResult } from 'typeorm';
-
 import { CreateUserDTO, UpdateUserDTO, User } from '@angular-auth/libs/common';
 
 import { UserService } from '../../domain';
@@ -24,7 +22,7 @@ export class UserController {
   ) {}
 
   @Get(':id')
-  getUser(@Param('id') id: number): Promise<User | null> {
+  getUser(@Param('id') id: number): Promise<User> {
     return this.userDriverPort.getUser(id);
   }
 
@@ -42,12 +40,12 @@ export class UserController {
   updateUser(
     @Param('id') id: number,
     @Body() body: UpdateUserDTO
-  ): Promise<UpdateResult> {
+  ): Promise<User> {
     return this.userDriverPort.updateUser(id, body);
   }
 
   @Delete(':id')
-  deleteUser(@Param('id') id: number): Promise<DeleteResult> {
+  deleteUser(@Param('id') id: number): Promise<void> {
     return this.userDriverPort.deleteUser(id);
   }
 }

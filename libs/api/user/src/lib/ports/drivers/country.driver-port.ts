@@ -1,5 +1,3 @@
-import { DeleteResult, UpdateResult } from 'typeorm';
-
 import {
   Country,
   CreateCountryDTO,
@@ -8,8 +6,9 @@ import {
 
 export interface CountryDriverPort {
   createCountry(country: CreateCountryDTO): Promise<Country>;
-  updateCountry(id: number, country: UpdateCountryDTO): Promise<UpdateResult>;
-  deleteCountry(id: number): Promise<DeleteResult>;
+  updateCountry(id: number, country: UpdateCountryDTO): Promise<Country>;
+  deleteCountry(id: number): Promise<void>;
   getCountry(id: number): Promise<Country>;
   getCountries(): Promise<Country[]>;
+  getCountryByName(name: string): Promise<Country>;
 }

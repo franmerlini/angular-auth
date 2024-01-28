@@ -1,5 +1,6 @@
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsString,
@@ -8,7 +9,7 @@ import {
 
 import { Type } from 'class-transformer';
 
-import { Role } from '../enums';
+import { Role, RoleEnum } from '../enums';
 import { CountryDTO } from './country.dto';
 
 export class UserDTO {
@@ -39,5 +40,6 @@ export class UserDTO {
 
   @IsNotEmpty()
   @IsString()
+  @IsEnum(RoleEnum)
   role!: Role;
 }

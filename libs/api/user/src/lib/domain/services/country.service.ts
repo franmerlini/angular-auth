@@ -1,36 +1,88 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
-import { DeleteResult, UpdateResult } from 'typeorm';
+import {
+  Country,
+  CreateCountryDTO,
+  UpdateCountryDTO,
+} from '@angular-auth/libs/common';
 
-import { Country } from '@angular-auth/libs/common';
-
-import { COUNTRY_DRIVEN_ADAPTER_TOKEN } from '../../adapters';
+import { CountryDrivenAdapter } from '../../adapters';
 import { CountryDrivenPort, CountryDriverPort } from '../../ports';
 
 @Injectable()
 export class CountryService implements CountryDriverPort {
   constructor(
-    @Inject(COUNTRY_DRIVEN_ADAPTER_TOKEN)
+    @Inject(CountryDrivenAdapter)
     private readonly countryDrivenPort: CountryDrivenPort
   ) {}
 
-  createCountry(country: Country): Promise<Country> {
+  async createCountry(country: CreateCountryDTO): Promise<Country> {
+    const { name } = country;
+
+    const existsCountry = await this.countryDrivenPort.getCountryByName(name);
+
+    if (existsCountry) {
+      throw new ConflictException(`Country '${name}' already exists.`);
+    }
+
     return this.countryDrivenPort.createCountry(country);
   }
 
-  updateCountry(id: number, country: Country): Promise<UpdateResult> {
-    return this.countryDrivenPort.updateCountry(id, country);
+  async updateCountry(id: number, country: UpdateCountryDTO): Promise<Country> {
+    const { affected } = await this.countryDrivenPort.updateCountry(
+      id,
+      country
+    );
+
+    if (affected === 0) {
+      throw new NotFoundException(`Country with ID ${id} doesn't exist.`);
+    }
+
+    return this.countryDrivenPort.getCountry(id) as Promise<Country>;
   }
 
-  deleteCountry(id: number): Promise<DeleteResult> {
-    return this.countryDrivenPort.deleteCountry(id);
+  async deleteCountry(id: number): Promise<void> {
+    const existsCountry = await this.countryDrivenPort.getCountry(id);
+
+    if (!existsCountry) {
+      throw new NotFoundException(`Country with ID ${id} doesn't exist.`);
+    }
+
+    this.countryDrivenPort.deleteCountry(id);
   }
 
-  getCountry(id: number): Promise<Country> {
-    return this.countryDrivenPort.getCountry(id);
+  async getCountry(id: number): Promise<Country> {
+    const country = await this.countryDrivenPort.getCountry(id);
+
+    if (!country) {
+      throw new NotFoundException(`Country with ID ${id} doesn't exist.`);
+    }
+
+    return country;
   }
 
-  getCountries(): Promise<Country[]> {
-    return this.countryDrivenPort.getCountries();
+  async getCountries(): Promise<Country[]> {
+    const countries = await this.countryDrivenPort.getCountries();
+
+    if (countries.length === 0) {
+      throw new NotFoundException(`No countries found.`);
+    }
+
+    return countries;
+  }
+
+  async getCountryByName(name: string): Promise<Country> {
+    const country = await this.countryDrivenPort.getCountryByName(name);
+
+    if (!country) {
+      throw new NotFoundException(`Country '${name}' doesn't exist.`);
+    }
+
+    return country;
   }
 }
