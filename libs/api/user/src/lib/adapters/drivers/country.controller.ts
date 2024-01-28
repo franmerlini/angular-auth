@@ -13,7 +13,7 @@ import { DeleteResult, UpdateResult } from 'typeorm';
 
 import {
   Country,
-  CountryDTO,
+  CreateCountryDTO,
   UpdateCountryDTO,
 } from '@angular-auth/libs/common';
 
@@ -38,7 +38,7 @@ export class CountryController {
   }
 
   @Post()
-  createCountry(@Body() body: CountryDTO): Promise<Country> {
+  createCountry(@Body() body: CreateCountryDTO): Promise<Country> {
     return this.countryDriverPort.createCountry(body);
   }
 
