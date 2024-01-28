@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 
-import { CreateUserDTO, User } from '@angular-auth/libs/common';
+import { CreateUserDTO, UpdateUserDTO, User } from '@angular-auth/libs/common';
 
 import { UserDrivenPort } from '../../ports';
 
@@ -32,7 +32,7 @@ export class UserDrivenAdapter implements UserDrivenPort {
     return await this.userRepository.save(user);
   }
 
-  async updateUser(id: number, user: User): Promise<UpdateResult> {
+  async updateUser(id: number, user: UpdateUserDTO): Promise<UpdateResult> {
     const repoUser = await this.userRepository.findOne({
       where: { id },
     });

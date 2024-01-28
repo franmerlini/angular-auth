@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 import { UserDTO } from './user.dto';
 
-export class CreateUserDTO extends OmitType(UserDTO, ['id', 'role', 'token']) {
+export class CreateUserDTO extends OmitType(UserDTO, ['id', 'role']) {
   @IsNotEmpty()
   @IsString()
   password!: string;

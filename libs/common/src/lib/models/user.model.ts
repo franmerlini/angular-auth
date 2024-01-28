@@ -6,6 +6,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+import { Exclude } from 'class-transformer';
+
 import { Role, RoleEnum } from '../enums';
 import { Country } from './country.model';
 
@@ -37,5 +39,7 @@ export class User {
   })
   role!: Role;
 
-  // token!: string;
+  @Exclude()
+  @Column()
+  password!: string;
 }

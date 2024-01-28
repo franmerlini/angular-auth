@@ -8,6 +8,7 @@ import {
 
 import { Type } from 'class-transformer';
 
+import { Role } from '../enums';
 import { CountryDTO } from './country.dto';
 
 export class UserDTO {
@@ -38,9 +39,5 @@ export class UserDTO {
 
   @IsNotEmpty()
   @IsString()
-  role!: string;
-
-  @IsNotEmpty()
-  @IsString()
-  token!: string;
+  role!: Role;
 }

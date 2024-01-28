@@ -11,7 +11,7 @@ import {
 
 import { DeleteResult, UpdateResult } from 'typeorm';
 
-import { CreateUserDTO, User, UserDTO } from '@angular-auth/libs/common';
+import { CreateUserDTO, UpdateUserDTO, User } from '@angular-auth/libs/common';
 
 import { UserService } from '../../domain';
 import { UserDriverPort } from '../../ports';
@@ -41,7 +41,7 @@ export class UserController {
   @Put(':id')
   updateUser(
     @Param('id') id: number,
-    @Body() body: UserDTO
+    @Body() body: UpdateUserDTO
   ): Promise<UpdateResult> {
     return this.userDriverPort.updateUser(id, body);
   }
