@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+import { Role, RoleEnum } from '../enums';
 import { Country } from './country.model';
 
 @Entity({ name: 'users' })
@@ -19,7 +20,7 @@ export class User {
   @Column()
   lastName!: string;
 
-  @Column()
+  @Column({ unique: true })
   email!: string;
 
   @Column()
@@ -29,8 +30,12 @@ export class User {
   @JoinColumn({ name: 'country_id' })
   country!: Country;
 
-  // @Column()
-  // role!: string;
+  @Column({
+    type: 'enum',
+    enum: Object.values(RoleEnum),
+    default: RoleEnum.USER,
+  })
+  role!: Role;
 
   // token!: string;
 }
