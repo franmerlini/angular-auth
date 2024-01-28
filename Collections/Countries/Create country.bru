@@ -1,0 +1,18 @@
+meta {
+  name: Create country
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/api/country
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Venezuela",
+    "code": "VE"
+  }
+}
