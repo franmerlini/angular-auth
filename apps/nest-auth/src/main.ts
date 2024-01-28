@@ -1,6 +1,6 @@
-import { Logger } from '@nestjs/common';
+import { ClassSerializerInterceptor, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 
 import {
   HttpExceptionFilter,
@@ -15,11 +15,13 @@ async function bootstrap() {
 
   const globalPrefix = 'api';
   const port = app.get(ConfigService).get('port');
+  const reflector = app.get(Reflector);
 
   app.setGlobalPrefix(globalPrefix);
   app.enableCors(cors);
   app.useGlobalPipes(validationPipe);
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector));
 
   await app.listen(port);
   Logger.log(

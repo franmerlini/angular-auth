@@ -3,7 +3,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
+import { hash } from 'bcrypt';
+
+import { SecurityConfigKeys } from '@angular-auth/libs/api/core';
 import { CountryService, UserService } from '@angular-auth/libs/api/user';
 import { CreateUserDTO, User } from '@angular-auth/libs/common';
 
@@ -11,7 +15,8 @@ import { CreateUserDTO, User } from '@angular-auth/libs/common';
 export class AuthService {
   constructor(
     private readonly userService: UserService,
-    private readonly countryService: CountryService
+    private readonly countryService: CountryService,
+    private readonly configService: ConfigService
   ) {}
 
   async register(user: CreateUserDTO): Promise<User> {
@@ -30,10 +35,21 @@ export class AuthService {
       throw new NotFoundException('Country not found.');
     }
 
+    const userData = await this.hashUserPassword(user);
+
     return await this.userService.createUser({
-      ...user,
+      ...userData,
       country,
     });
+  }
+
+  private async hashUserPassword(user: CreateUserDTO): Promise<CreateUserDTO> {
+    const { password } = user;
+    const hashSalt = this.configService.get(SecurityConfigKeys.HASH_SALT);
+    return {
+      ...user,
+      password: await hash(password, hashSalt),
+    };
   }
 
   async login(email: string, password: string): Promise<User> {

@@ -6,13 +6,13 @@ import {
   databaseConfig,
 } from '@angular-auth/libs/api/database';
 
-import { appConfig } from './config';
+import { appConfig, securityConfig } from './config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, databaseConfig],
+      load: [appConfig, databaseConfig, securityConfig],
     }),
     DatabaseModule,
   ],
