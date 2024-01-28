@@ -2,10 +2,12 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 
-import { hash } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 
 import { SecurityConfigKeys } from '@angular-auth/libs/api/core';
 import { CountryService, UserService } from '@angular-auth/libs/api/user';
@@ -16,7 +18,8 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly countryService: CountryService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private readonly jwtService: JwtService
   ) {}
 
   async register(user: CreateUserDTO): Promise<User> {
@@ -35,7 +38,7 @@ export class AuthService {
       throw new NotFoundException('Country not found.');
     }
 
-    const userData = await this.hashUserPassword(user);
+    const userData = await this.encryptUserPassword(user);
 
     return await this.userService.createUser({
       ...userData,
@@ -43,7 +46,9 @@ export class AuthService {
     });
   }
 
-  private async hashUserPassword(user: CreateUserDTO): Promise<CreateUserDTO> {
+  private async encryptUserPassword(
+    user: CreateUserDTO
+  ): Promise<CreateUserDTO> {
     const { password } = user;
     const hashSalt = this.configService.get(SecurityConfigKeys.HASH_SALT);
     return {
@@ -52,15 +57,28 @@ export class AuthService {
     };
   }
 
-  async login(email: string, password: string): Promise<User> {
-    console.log(email, password);
-
+  async login(
+    email: string,
+    password: string
+  ): Promise<{ accessToken: string }> {
     const user = await this.userService.getUserByEmail(email);
 
     if (!user) {
       throw new NotFoundException('User not found.');
     }
 
-    return user;
+    const { password: userPassword, id, username } = user;
+
+    const isValidPassword = await compare(password, userPassword);
+
+    if (!isValidPassword) {
+      throw new UnauthorizedException('Invalid credentials.');
+    }
+
+    const payload = { sub: id, username };
+
+    return {
+      accessToken: await this.jwtService.signAsync(payload),
+    };
   }
 }
