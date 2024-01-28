@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { DeleteResult, UpdateResult } from 'typeorm';
 
-import { Country, CreateCountryDTO } from '@angular-auth/libs/common';
+import {
+  Country,
+  CreateCountryDTO,
+  UpdateCountryDTO,
+} from '@angular-auth/libs/common';
 
 import { CountryDrivenPort } from '../../ports';
 import { CountryRepository } from './repositories';
@@ -21,7 +25,10 @@ export class CountryDrivenAdapter implements CountryDrivenPort {
     return await this.countryRepository.save(country);
   }
 
-  async updateCountry(id: number, country: Country): Promise<UpdateResult> {
+  async updateCountry(
+    id: number,
+    country: UpdateCountryDTO
+  ): Promise<UpdateResult> {
     const repoCountry = await this.countryRepository.findOne({
       where: { id },
     });

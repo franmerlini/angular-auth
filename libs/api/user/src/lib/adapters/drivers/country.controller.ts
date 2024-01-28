@@ -11,7 +11,11 @@ import {
 
 import { DeleteResult, UpdateResult } from 'typeorm';
 
-import { Country, CountryDTO } from '@angular-auth/libs/common';
+import {
+  Country,
+  CountryDTO,
+  UpdateCountryDTO,
+} from '@angular-auth/libs/common';
 
 import { CountryService } from '../../domain';
 import { CountryDriverPort } from '../../ports';
@@ -41,7 +45,7 @@ export class CountryController {
   @Put(':id')
   updateCountry(
     @Param('id') id: number,
-    @Body() body: CountryDTO
+    @Body() body: UpdateCountryDTO
   ): Promise<UpdateResult> {
     return this.countryDriverPort.updateCountry(id, body);
   }
