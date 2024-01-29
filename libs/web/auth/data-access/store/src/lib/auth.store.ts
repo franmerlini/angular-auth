@@ -6,7 +6,10 @@ import { Store } from '@ngrx/store';
 import { Observable, catchError, of, switchMap, tap } from 'rxjs';
 
 import { CreateUserDTO, User } from '@angular-auth/libs/common';
-import { AuthService } from '@angular-auth/libs/web/shared/data-access/api';
+import {
+  AuthService,
+  UserService,
+} from '@angular-auth/libs/web/shared/data-access/api';
 import { LocalStorageService } from '@angular-auth/libs/web/shared/data-access/local-storage';
 import { RouterActions } from '@angular-auth/libs/web/shared/data-access/store';
 
@@ -30,6 +33,7 @@ export class AuthStore extends ComponentStore<AuthState> {
 
   private readonly store = inject(Store);
   private readonly authService = inject(AuthService);
+  private readonly userService = inject(UserService);
 
   readonly user$ = this.select((state) => state.user);
   readonly token$ = this.select((state) => state.accessToken);
@@ -73,7 +77,7 @@ export class AuthStore extends ComponentStore<AuthState> {
   readonly register = this.effect((credentials$: Observable<CreateUserDTO>) =>
     credentials$.pipe(
       switchMap((user) =>
-        this.authService.register(user).pipe(
+        this.userService.createUser(user).pipe(
           tap(() => this.store.dispatch(RouterActions.go(['/login']))),
           catchError((error) => of(this.patchState({ error })))
         )

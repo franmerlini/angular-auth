@@ -3,20 +3,18 @@ import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
+import { CreateUserDTO, User } from '@angular-auth/libs/common';
 import { APP_CONFIG } from '@angular-auth/libs/web/shared/utils';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class UserService {
   private readonly http = inject(HttpClient);
   private readonly appConfig = inject(APP_CONFIG);
-  private readonly baseURL = `${this.appConfig.baseURL}/auth`;
+  private readonly baseURL = `${this.appConfig.baseURL}/user`;
 
-  login(email: string, password: string): Observable<{ accessToken: string }> {
-    return this.http.post<{ accessToken: string }>(`${this.baseURL}/login`, {
-      email,
-      password,
-    });
+  createUser(user: CreateUserDTO): Observable<User> {
+    return this.http.post<User>(`${this.baseURL}`, user);
   }
 }
