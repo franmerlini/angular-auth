@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { AuthStore } from '@angular-auth/libs/web/auth/data-access/store';
 import { FooterComponent } from '@angular-auth/web/shell/ui/footer';
 import { HeaderComponent } from '@angular-auth/web/shell/ui/header';
 
@@ -10,7 +11,7 @@ import { HeaderComponent } from '@angular-auth/web/shell/ui/header';
   imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
   template: `
     <div class="min-h-screen flex flex-col">
-      <aa-header />
+      <aa-header (logout)="onLogout()" />
 
       <div class="flex-grow">
         <router-outlet />
@@ -21,4 +22,10 @@ import { HeaderComponent } from '@angular-auth/web/shell/ui/header';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutComponent {}
+export class LayoutComponent {
+  private authStore = inject(AuthStore);
+
+  onLogout(): void {
+    this.authStore.logout();
+  }
+}

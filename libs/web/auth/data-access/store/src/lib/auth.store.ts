@@ -14,7 +14,7 @@ import { AuthKeysEnum } from './auth-keys.enum';
 
 export interface AuthState {
   user: User;
-  accessToken: string;
+  accessToken: string | null;
   isAuthenticated: boolean;
   error: string;
 }
@@ -78,6 +78,17 @@ export class AuthStore extends ComponentStore<AuthState> {
           catchError((error) => of(this.patchState({ error })))
         )
       )
+    )
+  );
+
+  readonly logout = this.effect((_: Observable<void>) =>
+    _.pipe(
+      tap(() => {
+        this.patchState({ accessToken: null });
+        this.patchState({ isAuthenticated: false });
+        LocalStorageService.removeItem(AuthKeysEnum.ACCESS_TOKEN_KEY);
+        this.store.dispatch(RouterActions.go(['/login']));
+      })
     )
   );
 }
