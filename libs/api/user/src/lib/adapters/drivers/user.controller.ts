@@ -9,6 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 
+import { Public } from '@angular-auth/libs/api/core';
 import { CreateUserDTO, UpdateUserDTO, User } from '@angular-auth/libs/common';
 
 import { UserService } from '../../domain';
@@ -31,6 +32,7 @@ export class UserController {
     return this.userDriverPort.getUsers();
   }
 
+  @Public()
   @Post()
   createUser(@Body() body: CreateUserDTO): Promise<User> {
     return this.userDriverPort.createUser(body);
