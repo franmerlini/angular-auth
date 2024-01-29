@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'aa-header',
@@ -8,4 +13,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  @Output() logout = new EventEmitter<void>();
+
+  onClick(): void {
+    this.logout.emit();
+  }
+}
