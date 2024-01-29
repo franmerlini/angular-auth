@@ -1,9 +1,9 @@
 import { Body, Controller, Post } from '@nestjs/common';
 
+import { Public } from '@angular-auth/libs/api/core';
 import { CreateUserDTO, User } from '@angular-auth/libs/common';
 
 import { AuthService } from './auth.service';
-import { Public } from './decorators';
 
 @Controller('auth')
 export class AuthController {

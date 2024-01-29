@@ -9,8 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 
 import { Request } from 'express';
 
-import { SecurityConfigKeys } from '@angular-auth/libs/api/core';
-import { IS_PUBLIC_KEY } from '../decorators';
+import { IS_PUBLIC_KEY, SecurityConfigKeys } from '@angular-auth/libs/api/core';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
