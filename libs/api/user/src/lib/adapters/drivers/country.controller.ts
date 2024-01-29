@@ -9,6 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 
+import { Public } from '@angular-auth/libs/api/core';
 import {
   Country,
   CreateCountryDTO,
@@ -30,6 +31,7 @@ export class CountryController {
     return this.countryDriverPort.getCountry(id);
   }
 
+  @Public()
   @Get()
   getCountries(): Promise<Country[]> {
     return this.countryDriverPort.getCountries();
