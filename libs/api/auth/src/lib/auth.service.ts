@@ -57,14 +57,17 @@ export class AuthService {
     };
   }
 
-  async login(email: string, password: string): Promise<string> {
+  async login(
+    email: string,
+    password: string
+  ): Promise<{ accessToken: string }> {
     const user = await this.userService.getUserByEmail(email);
 
     if (!user) {
       throw new NotFoundException('User not found.');
     }
 
-    const { password: userPassword, id, username, role } = user;
+    const { password: userPassword, id, role } = user;
 
     const isValidPassword = await compare(password, userPassword);
 
@@ -72,10 +75,14 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials.');
     }
 
-    return await this.jwtService.signAsync({
+    const accessToken = await this.jwtService.signAsync({
       sub: id,
-      username,
+      email,
       role,
     });
+
+    return {
+      accessToken,
+    };
   }
 }
