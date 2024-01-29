@@ -26,10 +26,6 @@ export class UserDTO {
   lastName!: string;
 
   @IsNotEmpty()
-  @IsString()
-  username!: string;
-
-  @IsNotEmpty()
   @IsEmail()
   email!: string;
 
