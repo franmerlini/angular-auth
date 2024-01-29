@@ -67,7 +67,7 @@ export class AuthService {
       throw new NotFoundException('User not found.');
     }
 
-    const { password: userPassword, id, username } = user;
+    const { password: userPassword, id, username, role } = user;
 
     const isValidPassword = await compare(password, userPassword);
 
@@ -75,7 +75,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials.');
     }
 
-    const payload = { sub: id, username };
+    const payload = { sub: id, username, role };
 
     return {
       accessToken: await this.jwtService.signAsync(payload),
