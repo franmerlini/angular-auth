@@ -1,4 +1,4 @@
-const APP_PREFIX = 'AA-';
+const APP_PREFIX = 'AA_';
 
 export class LocalStorageService {
   public static get initialState(): Record<string, unknown> {
@@ -42,26 +42,30 @@ export class LocalStorageService {
     );
   }
 
-  public static setItem(key: string, value: unknown): void {
-    let valueToStore: unknown;
+  public static setItem(key: string, value: string | object): void {
+    let valueToStore: string;
 
-    try {
-      valueToStore = JSON.stringify(value);
-    } catch (error) {
+    if (typeof value === 'string') {
       valueToStore = value;
+    } else {
+      valueToStore = JSON.stringify(value);
     }
 
-    localStorage.setItem(`${APP_PREFIX}${key}`, JSON.stringify(valueToStore));
+    localStorage.setItem(`${APP_PREFIX}${key}`, valueToStore);
   }
 
-  public static getItem(key: string): unknown {
+  public static getItem(key: string): string | null {
     const value = localStorage.getItem(`${APP_PREFIX}${key}`);
 
     if (!value) {
       return null;
     }
 
-    return JSON.parse(value);
+    try {
+      return JSON.parse(value);
+    } catch (error) {
+      return value;
+    }
   }
 
   public static removeItem(key: string): void {
