@@ -1,9 +1,40 @@
-import { OmitType, PartialType } from '@nestjs/swagger';
+import {
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 
-import { IsOptional, IsString } from 'class-validator';
-import { UserDTO } from './user.dto';
+import { Role, RoleEnum } from '../enums';
+import { CountryDTO } from './country.dto';
 
-export class UpdateUserDTO extends PartialType(OmitType(UserDTO, ['id'])) {
+export class UpdateUserDTO {
+  @IsOptional()
+  @IsString()
+  firstName!: string;
+
+  @IsOptional()
+  @IsString()
+  lastName!: string;
+
+  @IsOptional()
+  @IsEmail()
+  email!: string;
+
+  @IsOptional()
+  @IsString()
+  city!: string;
+
+  @IsOptional()
+  @ValidateNested()
+  country!: CountryDTO;
+
+  @IsOptional()
+  @IsString()
+  @IsEnum(RoleEnum)
+  role!: Role;
+
   @IsOptional()
   @IsString()
   password!: string;

@@ -1,5 +1,11 @@
-import { OmitType } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-import { CountryDTO } from './country.dto';
+export class CreateCountryDTO {
+  @IsNotEmpty()
+  @IsString()
+  name!: string;
 
-export class CreateCountryDTO extends OmitType(CountryDTO, ['id']) {}
+  @IsNotEmpty()
+  @IsString()
+  code!: string;
+}

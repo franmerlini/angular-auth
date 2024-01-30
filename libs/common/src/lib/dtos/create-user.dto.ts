@@ -1,10 +1,28 @@
-import { OmitType } from '@nestjs/swagger';
+import { IsEmail, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
 
-import { IsNotEmpty, IsString } from 'class-validator';
+import { CountryDTO } from './country.dto';
 
-import { UserDTO } from './user.dto';
+export class CreateUserDTO {
+  @IsNotEmpty()
+  @IsString()
+  firstName!: string;
 
-export class CreateUserDTO extends OmitType(UserDTO, ['id', 'role']) {
+  @IsNotEmpty()
+  @IsString()
+  lastName!: string;
+
+  @IsNotEmpty()
+  @IsEmail()
+  email!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  city!: string;
+
+  @IsNotEmpty()
+  @ValidateNested()
+  country!: CountryDTO;
+
   @IsNotEmpty()
   @IsString()
   password!: string;

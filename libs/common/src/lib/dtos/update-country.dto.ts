@@ -1,7 +1,11 @@
-import { OmitType, PartialType } from '@nestjs/swagger';
+import { IsOptional, IsString } from 'class-validator';
 
-import { CountryDTO } from './country.dto';
+export class UpdateCountryDTO {
+  @IsOptional()
+  @IsString()
+  name!: string;
 
-export class UpdateCountryDTO extends PartialType(
-  OmitType(CountryDTO, ['id'])
-) {}
+  @IsOptional()
+  @IsString()
+  code!: string;
+}
