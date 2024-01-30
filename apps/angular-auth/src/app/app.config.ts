@@ -1,4 +1,4 @@
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { APP_INITIALIZER, ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -8,6 +8,10 @@ import { Store, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 import {
+  errorInterceptor,
+  jwtInterceptor,
+} from '@angular-auth/libs/web/auth/utils';
+import {
   CustomSerializer,
   ROOT_EFFECTS,
   ROOT_REDUCERS,
@@ -15,6 +19,7 @@ import {
 } from '@angular-auth/libs/web/shared/data-access/store';
 import { initApp, provideAppConfig } from '@angular-auth/libs/web/shared/utils';
 import { webShellRoutes } from '@angular-auth/web/shell/feature';
+
 import { environment } from '../environments';
 
 const provideAppInitializer = () => ({
@@ -35,7 +40,7 @@ export const appConfig: ApplicationConfig = {
     provideStoreDevtools(),
     provideRouter(webShellRoutes),
     provideAppInitializer(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([jwtInterceptor, errorInterceptor])),
     provideAppConfig(environment),
   ],
 };
