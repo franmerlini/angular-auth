@@ -7,8 +7,8 @@ import { LoginComponent } from '@angular-auth/libs/web/auth/feature/login';
 import { RegisterComponent } from '@angular-auth/libs/web/auth/feature/register';
 import {
   countriesGuard,
-  isAuthenticated,
-  isNotAuthenticated,
+  existsUserGuard,
+  isAuthenticatedGuard,
 } from '@angular-auth/libs/web/auth/utils';
 import { CountryService } from '@angular-auth/libs/web/shared/data-access/api';
 import {
@@ -21,7 +21,7 @@ export const webShellRoutes: Route[] = [
   {
     path: '',
     component: LayoutComponent,
-    canActivate: [isAuthenticated()],
+    canActivate: [isAuthenticatedGuard(), existsUserGuard()],
     children: [
       {
         path: '',
@@ -33,7 +33,7 @@ export const webShellRoutes: Route[] = [
   {
     path: 'register',
     component: RegisterComponent,
-    canActivate: [countriesGuard(), isNotAuthenticated()],
+    canActivate: [countriesGuard()],
     providers: [
       provideState(CountryFeature),
       provideEffects(CountryEffects),
@@ -43,7 +43,7 @@ export const webShellRoutes: Route[] = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [isNotAuthenticated()],
+    canActivate: [],
   },
   {
     path: '**',

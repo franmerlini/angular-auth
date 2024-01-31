@@ -3,9 +3,9 @@ import { Injectable, inject } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { Store } from '@ngrx/store';
 
-import { Observable, catchError, of, switchMap, tap } from 'rxjs';
+import { EMPTY, Observable, catchError, of, switchMap, tap } from 'rxjs';
 
-import { CreateUserDTO, User } from '@angular-auth/libs/common';
+import { AuthUrlsEnum, CreateUserDTO, User } from '@angular-auth/libs/common';
 import {
   AuthService,
   UserService,
@@ -13,14 +13,14 @@ import {
 import { LocalStorageService } from '@angular-auth/libs/web/shared/data-access/local-storage';
 import { RouterActions } from '@angular-auth/libs/web/shared/data-access/store';
 
+import { HttpRequest } from '@angular/common/http';
 import { AuthKeysEnum } from './auth-keys.enum';
 
 export interface AuthState {
   user: User | null;
-  accessToken: string | null;
-  refreshToken: string | null;
+  userId: number | null;
+  userLoaded: boolean;
   isAuthenticated: boolean;
-  isRefreshing: boolean;
   error: string;
 }
 
@@ -36,13 +36,11 @@ export class AuthStore extends ComponentStore<AuthState> {
   private readonly store = inject(Store);
   private readonly authService = inject(AuthService);
   private readonly userService = inject(UserService);
+  private _isRefreshing = false;
 
   readonly user$ = this.select((state) => state.user);
-  readonly accessToken$ = this.select((state) => state.accessToken);
-  readonly refreshToken$ = this.select((state) => state.refreshToken);
+  readonly userLoaded$ = this.select((state) => state.userLoaded);
   readonly isAuthenticated$ = this.select((state) => state.isAuthenticated);
-  readonly isRefreshing$ = this.select((state) => state.isRefreshing);
-  readonly error$ = this.select((state) => state.error);
 
   private loadToken(): void {
     const accessToken = LocalStorageService.getItem(
@@ -54,7 +52,7 @@ export class AuthStore extends ComponentStore<AuthState> {
       return;
     }
 
-    this.patchState({ accessToken, isAuthenticated: true });
+    this.patchState({ isAuthenticated: true });
   }
 
   readonly login = this.effect(
@@ -62,12 +60,15 @@ export class AuthStore extends ComponentStore<AuthState> {
       credentials$.pipe(
         switchMap(({ email, password }) =>
           this.authService.login(email, password).pipe(
-            tap(({ accessToken, refreshToken }) => {
+            tap(({ userId, accessToken, refreshToken }) => {
               this.patchState({
-                accessToken,
-                refreshToken,
+                userId,
                 isAuthenticated: true,
               });
+              LocalStorageService.setItem(
+                AuthKeysEnum.USER_ID_KEY,
+                userId.toString()
+              );
               LocalStorageService.setItem(
                 AuthKeysEnum.ACCESS_TOKEN_KEY,
                 accessToken
@@ -76,7 +77,7 @@ export class AuthStore extends ComponentStore<AuthState> {
                 AuthKeysEnum.REFRESH_TOKEN_KEY,
                 refreshToken
               );
-              this.store.dispatch(RouterActions.go(['/']));
+              this.loadUser();
             }),
             catchError((error) => of(this.patchState({ error })))
           )
@@ -100,10 +101,10 @@ export class AuthStore extends ComponentStore<AuthState> {
       tap(() => {
         this.patchState({
           user: null,
-          accessToken: null,
-          refreshToken: null,
+          userId: null,
           isAuthenticated: false,
         });
+        LocalStorageService.removeItem(AuthKeysEnum.USER_ID_KEY);
         LocalStorageService.removeItem(AuthKeysEnum.ACCESS_TOKEN_KEY);
         LocalStorageService.removeItem(AuthKeysEnum.REFRESH_TOKEN_KEY);
         this.store.dispatch(RouterActions.go(['/login']));
@@ -111,15 +112,59 @@ export class AuthStore extends ComponentStore<AuthState> {
     )
   );
 
-  set isRefreshing(isRefreshing: boolean) {
-    this.patchState({ isRefreshing });
+  readonly loadUser = this.effect((_: Observable<void>) =>
+    _.pipe(
+      switchMap(() => {
+        if (!this.userId) {
+          return EMPTY;
+        }
+
+        return this.userService.getUser(this.userId).pipe(
+          tap((user) => {
+            this.patchState({ user, userLoaded: true });
+            this.store.dispatch(RouterActions.go(['/']));
+          }),
+          catchError((error) =>
+            of(this.patchState({ error, userLoaded: false }))
+          )
+        );
+      })
+    )
+  );
+
+  setTokens(accessToken: string, refreshToken: string) {
+    LocalStorageService.setItem(AuthKeysEnum.ACCESS_TOKEN_KEY, accessToken);
+    LocalStorageService.setItem(AuthKeysEnum.REFRESH_TOKEN_KEY, refreshToken);
   }
 
-  set accessToken(accessToken: string) {
-    this.patchState({ accessToken });
+  addTokenToRequest(req: HttpRequest<unknown>) {
+    const token = req.url.endsWith(AuthUrlsEnum.REFRESH_TOKEN)
+      ? this.refreshToken
+      : this.accessToken;
+    return req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 
-  set refreshToken(refreshToken: string) {
-    this.patchState({ refreshToken });
+  get isRefreshing(): boolean {
+    return this._isRefreshing;
+  }
+
+  set isRefreshing(value: boolean) {
+    this._isRefreshing = value;
+  }
+
+  get userId(): number | null {
+    return Number(LocalStorageService.getItem(AuthKeysEnum.USER_ID_KEY));
+  }
+
+  get accessToken(): string | null {
+    return LocalStorageService.getItem(AuthKeysEnum.ACCESS_TOKEN_KEY);
+  }
+
+  get refreshToken(): string | null {
+    return LocalStorageService.getItem(AuthKeysEnum.REFRESH_TOKEN_KEY);
   }
 }

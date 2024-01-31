@@ -32,19 +32,12 @@ export const errorInterceptor = (
 
       return authService.refreshToken().pipe(
         concatMap(({ accessToken, refreshToken }) => {
-          authStore.accessToken = accessToken;
-          authStore.refreshToken = refreshToken;
-
-          req = req.clone({
-            setHeaders: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
-
-          return next(req);
+          authStore.setTokens(accessToken, refreshToken);
+          const clonedReq = authStore.addTokenToRequest(req);
+          return next(clonedReq);
         }),
         catchError(() => {
-          store.dispatch(RouterActions.go(['/']));
+          store.dispatch(RouterActions.go(['/login']));
           return EMPTY;
         }),
         finalize(() => (authStore.isRefreshing = false))
