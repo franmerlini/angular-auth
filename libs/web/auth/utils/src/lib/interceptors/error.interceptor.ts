@@ -28,17 +28,18 @@ export const errorInterceptor = (
         return throwError(() => error);
       }
 
+      if (authStore.isRefreshing) {
+        store.dispatch(RouterActions.go(['/login']));
+        return EMPTY;
+      }
+
       authStore.isRefreshing = true;
 
       return authService.refreshToken().pipe(
         concatMap(({ accessToken, refreshToken }) => {
           authStore.setTokens(accessToken, refreshToken);
-          const clonedReq = authStore.addTokenToRequest(req);
-          return next(clonedReq);
-        }),
-        catchError(() => {
-          store.dispatch(RouterActions.go(['/login']));
-          return EMPTY;
+          req = authStore.addTokenToRequest(req);
+          return next(req);
         }),
         finalize(() => (authStore.isRefreshing = false))
       );
