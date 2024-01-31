@@ -1,13 +1,17 @@
 meta {
-  name: Register
+  name: Refresh token
   type: http
   seq: 2
 }
 
-post {
-  url: http://localhost:3000/api/auth/register
+get {
+  url: http://localhost:3000/api/auth/refresh-token
   body: json
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiZnJhbm1lcmxpbmlAbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcwNjY3NDkxMywiZXhwIjoxNzA2Njc1MDMzfQ.B2HGQm-caPbfTp1IQD_ZhpZbOBdMtypXud82wVgubYQ
 }
 
 body:json {
