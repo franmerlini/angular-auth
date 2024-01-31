@@ -4,12 +4,14 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
 import { compare } from 'bcrypt';
 
 import { Request } from 'express';
 
+import { SecurityConfigKeys } from '@angular-auth/libs/api/core';
 import { UserService } from '@angular-auth/libs/api/user';
 import { AuthCredentials, JwtPayload } from '@angular-auth/libs/common';
 
@@ -17,7 +19,8 @@ import { AuthCredentials, JwtPayload } from '@angular-auth/libs/common';
 export class AuthService {
   constructor(
     private readonly userService: UserService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService
   ) {}
 
   async login(email: string, password: string): Promise<AuthCredentials> {
@@ -51,10 +54,13 @@ export class AuthService {
       throw new UnauthorizedException('No token provided.');
     }
 
-    const jwtPayload: JwtPayload = await this.jwtService.decode(token);
+    let jwtPayload: JwtPayload;
+    const publicKey = this.configService.get(SecurityConfigKeys.JWT_SECRET);
 
-    if (!jwtPayload) {
-      throw new UnauthorizedException('Invalid token.');
+    try {
+      jwtPayload = await this.jwtService.verifyAsync(token, { publicKey });
+    } catch (error) {
+      throw new UnauthorizedException('Invalid or expired token.');
     }
 
     const user = await this.userService.getUserByEmail(jwtPayload.email);
@@ -63,18 +69,25 @@ export class AuthService {
       throw new ForbiddenException('Access denied.');
     }
 
-    return this.generateTokens(jwtPayload);
+    const { id, email, role } = user;
+
+    return this.generateTokens({
+      sub: id,
+      email,
+      role,
+    });
   }
 
   private async generateTokens(
     jwtPayload: JwtPayload
   ): Promise<AuthCredentials> {
     const [accessToken, refreshToken] = await Promise.all([
-      this.jwtService.signAsync(jwtPayload, { expiresIn: '5s' }),
+      this.jwtService.signAsync(jwtPayload, { expiresIn: '10s' }),
       this.jwtService.signAsync(jwtPayload, { expiresIn: '2m' }),
     ]);
 
     return {
+      userId: jwtPayload.sub,
       accessToken,
       refreshToken,
     };
