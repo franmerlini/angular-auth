@@ -1,0 +1,26 @@
+meta {
+  name: Create user
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:3000/api/user
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "firstName": "Maria",
+    "lastName": "Becerra",
+    "email": "mariabecerra@mail.com",
+    "password": "mary",
+    "city": "Buenos Aires",
+    "country": {
+      "id": 1,
+      "name": "Agentina",
+      "code": "AR"
+    }
+  }
+}
