@@ -1,6 +1,6 @@
 export const securityConfig = () => ({
-  hashSalt: 10,
-  jwtSecret: 'secret',
+  hashSalt: process.env['NX_HASH_SALT'],
+  jwtSecret: process.env['NX_JWT_SECRET'],
 });
 
 export const SecurityConfigKeys = {

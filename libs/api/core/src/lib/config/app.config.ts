@@ -1,3 +1,3 @@
 export const appConfig = () => ({
-  port: 3000,
+  port: process.env['NX_PORT'],
 });
