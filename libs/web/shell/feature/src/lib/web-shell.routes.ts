@@ -9,6 +9,7 @@ import {
   countriesGuard,
   existsUserGuard,
   isAuthenticatedGuard,
+  isNotAuthenticatedGuard,
 } from '@angular-auth/libs/web/auth/utils';
 import { CountryService } from '@angular-auth/libs/web/shared/data-access/api';
 import {
@@ -33,7 +34,7 @@ export const webShellRoutes: Route[] = [
   {
     path: 'register',
     component: RegisterComponent,
-    canActivate: [countriesGuard()],
+    canActivate: [countriesGuard(), isNotAuthenticatedGuard()],
     providers: [
       provideState(CountryFeature),
       provideEffects(CountryEffects),
@@ -43,7 +44,7 @@ export const webShellRoutes: Route[] = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [],
+    canActivate: [isNotAuthenticatedGuard()],
   },
   {
     path: '**',

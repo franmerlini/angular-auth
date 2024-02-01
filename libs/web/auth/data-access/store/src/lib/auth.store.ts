@@ -46,13 +46,7 @@ export class AuthStore extends ComponentStore<AuthState> {
     const accessToken = LocalStorageService.getItem(
       AuthKeysEnum.ACCESS_TOKEN_KEY
     );
-
-    if (!accessToken) {
-      this.patchState({ isAuthenticated: false });
-      return;
-    }
-
-    this.patchState({ isAuthenticated: true });
+    this.patchState({ isAuthenticated: !!accessToken });
   }
 
   readonly login = this.effect(

@@ -3,22 +3,23 @@ import { CanActivateFn } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 
-import { map } from 'rxjs';
+import { filter, map, take, tap } from 'rxjs';
 
 import { AuthStore } from '@angular-auth/libs/web/auth/data-access/store';
 import { RouterActions } from '@angular-auth/libs/web/shared/data-access/store';
 
-export const isNotAuthenticated = (): CanActivateFn => () => {
+export const isNotAuthenticatedGuard = (): CanActivateFn => () => {
   const authStore = inject(AuthStore);
   const store = inject(Store);
 
   return authStore.isAuthenticated$.pipe(
-    map((isAuthenticated) => {
-      if (isAuthenticated) {
+    tap((authenticated) => {
+      if (authenticated) {
         store.dispatch(RouterActions.go(['/']));
-        return false;
       }
-      return true;
-    })
+    }),
+    map((authenticated) => !authenticated),
+    filter((authenticated) => authenticated),
+    take(1)
   );
 };

@@ -18,7 +18,7 @@ export const isAuthenticatedGuard = (): CanActivateFn => () => {
         store.dispatch(RouterActions.go(['/login']));
       }
     }),
-    filter((loaded) => loaded),
+    filter((authenticated) => authenticated),
     take(1)
   );
 };
