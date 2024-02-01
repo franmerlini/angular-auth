@@ -1,28 +1,28 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 
 import { Request } from 'express';
 
 import { Public } from '@angular-auth/libs/api/core';
-import { AuthCredentials } from '@angular-auth/libs/common';
+import { AuthCredentials, User } from '@angular-auth/libs/common';
 
 import { AuthService } from './auth.service';
+import { LocalAuthGuard } from './guards';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Public()
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(
-    @Body() body: { email: string; password: string }
-  ): Promise<AuthCredentials> {
-    const { email, password } = body;
-    return this.authService.login(email, password);
+  login(@Req() req: Request): Promise<AuthCredentials> {
+    const { user } = req;
+    return this.authService.generateCredentials(user as User);
   }
 
-  @Public()
   @Get('refresh-token')
   refreshToken(@Req() req: Request): Promise<AuthCredentials> {
-    return this.authService.refreshToken(req);
+    const { user } = req;
+    return this.authService.generateCredentials(user as User);
   }
 }
