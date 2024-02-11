@@ -49,6 +49,10 @@ export class UserService implements UserDriverPort {
     return this.userDrivenPort.getUser(userId) as Promise<User>;
   }
 
+  async createUserFromGoogle(user: Partial<User>): Promise<User> {
+    return this.userDrivenPort.createUserFromGoogle(user);
+  }
+
   private async encryptUserPassword(
     user: CreateUserDTO
   ): Promise<CreateUserDTO> {

@@ -18,6 +18,10 @@ export class UserDrivenAdapter implements UserDrivenPort {
     return this.userRepository.save(user);
   }
 
+  createUserFromGoogle(user: Partial<User>): Promise<User> {
+    return this.userRepository.save(user);
+  }
+
   updateUser(id: number, user: UpdateUserDTO): Promise<UpdateResult> {
     return this.userRepository.update(id, user);
   }

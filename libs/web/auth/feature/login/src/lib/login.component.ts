@@ -9,15 +9,14 @@ import { LoginFormComponent } from '@angular-auth/libs/web/auth/ui/login-form';
   imports: [LoginFormComponent],
   template: `
     <div class="min-h-screen flex justify-center items-center">
-      <aa-login-form (submitForm)="onSubmitForm($event)" />
+      <aa-login-form
+        (googleLogin)="authStore.googleLogin()"
+        (submitForm)="authStore.login($event)"
+      />
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  private readonly authStore = inject(AuthStore);
-
-  onSubmitForm({ email, password }: { email: string; password: string }): void {
-    this.authStore.login({ email, password });
-  }
+  readonly authStore = inject(AuthStore);
 }

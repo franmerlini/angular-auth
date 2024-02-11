@@ -6,4 +6,8 @@ declare namespace Express {
     lastName: string;
     role: string;
   }
+
+  interface Request {
+    user: User;
+  }
 }

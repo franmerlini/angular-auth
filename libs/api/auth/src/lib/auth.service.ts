@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { compare } from 'bcrypt';
@@ -17,25 +13,15 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async validateUser(email: string): Promise<User> {
-    const user = await this.userService.getUserByEmail(email);
-
-    if (!user) {
-      throw new NotFoundException('User not found.');
-    }
-
-    return user;
+  async validateUser(email: string): Promise<User | null> {
+    return await this.userService.getUserByEmail(email);
   }
 
-  async validatePassword(user: User, password: string): Promise<void> {
-    const isValidPassword = await compare(password, user.password);
-
-    if (!isValidPassword) {
-      throw new UnauthorizedException('Invalid credentials.');
-    }
+  async validatePassword(user: User, password: string): Promise<boolean> {
+    return compare(password, user.password);
   }
 
-  async generateCredentials(user: User): Promise<AuthCredentials> {
+  generateCredentials(user: Express.User): Promise<AuthCredentials> {
     const { id, email, role } = user;
 
     const jwtPayload: JwtPayload = {

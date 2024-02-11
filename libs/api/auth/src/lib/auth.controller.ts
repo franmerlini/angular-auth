@@ -1,12 +1,12 @@
-import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 import { Public } from '@angular-auth/libs/api/core';
-import { AuthCredentials, User } from '@angular-auth/libs/common';
+import { AuthCredentials } from '@angular-auth/libs/common';
 
 import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './guards';
+import { GoogleGuard, LocalAuthGuard } from './guards';
 
 @Controller('auth')
 export class AuthController {
@@ -16,13 +16,31 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   login(@Req() req: Request): Promise<AuthCredentials> {
-    const { user } = req;
-    return this.authService.generateCredentials(user as User);
+    return this.authService.generateCredentials(req.user);
   }
 
   @Get('refresh-token')
   refreshToken(@Req() req: Request): Promise<AuthCredentials> {
-    const { user } = req;
-    return this.authService.generateCredentials(user as User);
+    return this.authService.generateCredentials(req.user);
+  }
+
+  @Public()
+  @Get('google')
+  @UseGuards(GoogleGuard)
+  async googleAuth(): Promise<void> {}
+
+  @Public()
+  @Get('google/redirect')
+  @UseGuards(GoogleGuard)
+  async googleAuthRedirect(
+    @Req() req: Request,
+    @Res() res: Response
+  ): Promise<void> {
+    const { userId, accessToken, refreshToken } =
+      await this.authService.generateCredentials(req.user);
+
+    const redirectUrl = `http://localhost:4200/auth/google/redirect?userId=${userId}&accessToken=${accessToken}&refreshToken=${refreshToken}`;
+
+    res.redirect(redirectUrl);
   }
 }

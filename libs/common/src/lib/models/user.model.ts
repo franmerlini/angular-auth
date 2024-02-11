@@ -25,10 +25,10 @@ export class User {
   @Column({ unique: true })
   email!: string;
 
-  @Column()
+  @Column({ nullable: true })
   city!: string;
 
-  @ManyToOne(() => Country)
+  @ManyToOne(() => Country, { nullable: true })
   @JoinColumn({ name: 'country_id' })
   country!: Country;
 
@@ -40,6 +40,9 @@ export class User {
   role!: Role;
 
   @Exclude()
-  @Column()
+  @Column({ nullable: true })
   password!: string;
+
+  @Column({ nullable: true })
+  picture!: string;
 }

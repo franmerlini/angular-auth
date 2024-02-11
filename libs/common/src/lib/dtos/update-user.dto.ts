@@ -38,4 +38,8 @@ export class UpdateUserDTO {
   @IsOptional()
   @IsString()
   password!: string;
+
+  @IsOptional()
+  @IsString()
+  picture!: string;
 }

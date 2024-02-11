@@ -10,7 +10,7 @@ import { UserModule } from '@angular-auth/libs/api/user';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards';
-import { JwtStrategy, LocalStrategy } from './strategies';
+import { GoogleStrategy, JwtStrategy, LocalStrategy } from './strategies';
 
 @Module({
   controllers: [AuthController],
@@ -28,6 +28,7 @@ import { JwtStrategy, LocalStrategy } from './strategies';
     AuthService,
     LocalStrategy,
     JwtStrategy,
+    GoogleStrategy,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

@@ -13,6 +13,10 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly appConfig = inject(APP_CONFIG);
 
+  googleLogin(): void {
+    window.location.href = `${this.appConfig.baseURL}${AuthUrlsEnum.GOOGLE_LOGIN}`;
+  }
+
   login(email: string, password: string): Observable<AuthCredentials> {
     return this.http.post<AuthCredentials>(
       `${this.appConfig.baseURL}${AuthUrlsEnum.LOGIN}`,

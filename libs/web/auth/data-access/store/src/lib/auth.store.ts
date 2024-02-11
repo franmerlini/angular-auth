@@ -49,6 +49,10 @@ export class AuthStore extends ComponentStore<AuthState> {
     this.patchState({ isAuthenticated: !!accessToken });
   }
 
+  readonly googleLogin = this.effect((_: Observable<void>) =>
+    _.pipe(tap(() => this.authService.googleLogin()))
+  );
+
   readonly login = this.effect(
     (credentials$: Observable<{ email: string; password: string }>) =>
       credentials$.pipe(

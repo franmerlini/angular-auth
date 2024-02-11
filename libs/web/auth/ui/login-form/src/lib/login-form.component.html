@@ -5,9 +5,12 @@
 
   <div class="flex flex-col w-full gap-4">
     <div class="flex flex-col sm:flex-row gap-4 w-full">
-      <button class="btn flex-shrink w-full">Iniciar sesión con Google</button>
-
-      <button class="btn flex-shrink w-full">Iniciar sesión con Github</button>
+      <button class="btn flex-shrink w-full" (click)="googleLogin.emit()">
+        Iniciar sesión con Google
+      </button>
+      <button class="btn flex-shrink w-full" (click)="githubLogin.emit()">
+        Iniciar sesión con Github
+      </button>
     </div>
 
     <p>
