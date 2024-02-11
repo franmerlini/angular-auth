@@ -42,6 +42,7 @@ export class RegisterFormComponent implements OnChanges, OnInit {
   @Input({ required: true }) countryList!: Country[];
 
   @Output() registerUser = new EventEmitter<CreateUserDTO>();
+  @Output() googleRegister = new EventEmitter<void>();
 
   private readonly fb = inject(NonNullableFormBuilder);
 

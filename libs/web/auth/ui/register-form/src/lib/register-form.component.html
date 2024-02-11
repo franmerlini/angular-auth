@@ -3,8 +3,9 @@
 
   <div class="flex flex-col w-full gap-4">
     <div class="flex flex-col sm:flex-row gap-4 w-full">
-      <button class="btn flex-shrink w-full">Registrarme con Google</button>
-
+      <button class="btn flex-shrink w-full" (click)="googleRegister.emit()">
+        Registrarme con Google
+      </button>
       <button class="btn flex-shrink w-full">Registrarme con Github</button>
     </div>
 

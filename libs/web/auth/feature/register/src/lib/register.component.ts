@@ -4,7 +4,6 @@ import { RouterLink } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 
-import { CreateUserDTO } from '@angular-auth/libs/common';
 import { AuthStore } from '@angular-auth/libs/web/auth/data-access/store';
 import { RegisterFormComponent } from '@angular-auth/libs/web/auth/ui/register-form';
 import { CountryFeature } from '@angular-auth/libs/web/shared/data-access/store';
@@ -18,7 +17,8 @@ import { CountryFeature } from '@angular-auth/libs/web/shared/data-access/store'
       @if (countries$ | async; as countries) {
       <aa-register-form
         [countryList]="countries"
-        (registerUser)="onRegisterUser($event)"
+        (registerUser)="authStore.register($event)"
+        (googleRegister)="authStore.googleAuth($event)"
       />
       }
     </div>
@@ -26,12 +26,9 @@ import { CountryFeature } from '@angular-auth/libs/web/shared/data-access/store'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
-  private readonly authStore = inject(AuthStore);
+  readonly authStore = inject(AuthStore);
+
   private readonly store = inject(Store);
 
   countries$ = this.store.select(CountryFeature.selectAll);
-
-  onRegisterUser(user: CreateUserDTO): void {
-    this.authStore.register(user);
-  }
 }
