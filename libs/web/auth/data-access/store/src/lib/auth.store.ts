@@ -5,7 +5,12 @@ import { Store } from '@ngrx/store';
 
 import { EMPTY, Observable, catchError, of, switchMap, tap } from 'rxjs';
 
-import { AuthUrlsEnum, CreateUserDTO, User } from '@angular-auth/libs/common';
+import {
+  AuthCredentials,
+  AuthUrlsEnum,
+  CreateUserDTO,
+  User,
+} from '@angular-auth/libs/common';
 import {
   AuthService,
   UserService,
@@ -58,30 +63,40 @@ export class AuthStore extends ComponentStore<AuthState> {
       credentials$.pipe(
         switchMap(({ email, password }) =>
           this.authService.login(email, password).pipe(
-            tap(({ userId, accessToken, refreshToken }) => {
-              this.patchState({
-                userId,
-                isAuthenticated: true,
-              });
-              LocalStorageService.setItem(
-                AuthKeysEnum.USER_ID_KEY,
-                userId.toString()
-              );
-              LocalStorageService.setItem(
-                AuthKeysEnum.ACCESS_TOKEN_KEY,
-                accessToken
-              );
-              LocalStorageService.setItem(
-                AuthKeysEnum.REFRESH_TOKEN_KEY,
-                refreshToken
-              );
-              this.loadUser();
-            }),
+            tap(({ userId, accessToken, refreshToken }) =>
+              this.setAuthState(userId, accessToken, refreshToken)
+            ),
             catchError((error) => of(this.patchState({ error })))
           )
         )
       )
   );
+
+  readonly loginWithOAuth = this.effect(
+    (credentials$: Observable<AuthCredentials>) =>
+      credentials$.pipe(
+        tap(({ userId, accessToken, refreshToken }) =>
+          this.setAuthState(userId, accessToken, refreshToken)
+        )
+      )
+  );
+
+  private setAuthState(
+    userId: number,
+    accessToken: string,
+    refreshToken: string
+  ): void {
+    this.patchState({
+      userId,
+      isAuthenticated: true,
+    });
+
+    LocalStorageService.setItem(AuthKeysEnum.USER_ID_KEY, userId.toString());
+    LocalStorageService.setItem(AuthKeysEnum.ACCESS_TOKEN_KEY, accessToken);
+    LocalStorageService.setItem(AuthKeysEnum.REFRESH_TOKEN_KEY, refreshToken);
+
+    this.loadUser();
+  }
 
   readonly register = this.effect((credentials$: Observable<CreateUserDTO>) =>
     credentials$.pipe(
