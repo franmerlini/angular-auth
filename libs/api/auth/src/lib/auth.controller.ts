@@ -39,7 +39,7 @@ export class AuthController {
     const { userId, accessToken, refreshToken } =
       await this.authService.generateCredentials(req.user);
 
-    const redirectUrl = `http://localhost:4200/auth/google/redirect?userId=${userId}&accessToken=${accessToken}&refreshToken=${refreshToken}`;
+    const redirectUrl = `http://localhost:4200/redirect?userId=${userId}&accessToken=${accessToken}&refreshToken=${refreshToken}`;
 
     res.redirect(redirectUrl);
   }
