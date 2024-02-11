@@ -33,7 +33,7 @@ export class UserDrivenAdapter implements UserDrivenPort {
   getUser(id: number): Promise<User | null> {
     return this.userRepository
       .createQueryBuilder('user')
-      .innerJoinAndSelect('user.country', 'country')
+      .leftJoinAndSelect('user.country', 'country')
       .where('user.id = :id', { id })
       .getOne();
   }
@@ -41,7 +41,7 @@ export class UserDrivenAdapter implements UserDrivenPort {
   getUsers(): Promise<User[]> {
     return this.userRepository
       .createQueryBuilder('user')
-      .innerJoinAndSelect('user.country', 'country')
+      .leftJoinAndSelect('user.country', 'country')
       .getMany();
   }
 
