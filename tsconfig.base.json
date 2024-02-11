@@ -26,6 +26,9 @@
       "@angular-auth/libs/web/auth/feature/login": [
         "libs/web/auth/feature/login/src/index.ts"
       ],
+      "@angular-auth/libs/web/auth/feature/redirect": [
+        "libs/web/auth/feature/redirect/src/index.ts"
+      ],
       "@angular-auth/libs/web/auth/feature/register": [
         "libs/web/auth/feature/register/src/index.ts"
       ],
