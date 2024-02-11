@@ -10,7 +10,7 @@ import { LoginFormComponent } from '@angular-auth/libs/web/auth/ui/login-form';
   template: `
     <div class="min-h-screen flex justify-center items-center">
       <aa-login-form
-        (googleLogin)="authStore.googleLogin()"
+        (googleLogin)="authStore.googleAuth()"
         (submitForm)="authStore.login($event)"
       />
     </div>

@@ -13,7 +13,7 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly appConfig = inject(APP_CONFIG);
 
-  googleLogin(): void {
+  googleAuth(): void {
     window.location.href = `${this.appConfig.baseURL}${AuthUrlsEnum.GOOGLE_LOGIN}`;
   }
 
