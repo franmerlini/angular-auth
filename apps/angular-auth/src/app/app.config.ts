@@ -7,10 +7,9 @@ import { provideRouterStore } from '@ngrx/router-store';
 import { Store, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
-import {
-  errorInterceptor,
-  jwtInterceptor,
-} from '@angular-auth/libs/web/auth/utils';
+import { provideHotToastConfig } from '@ngneat/hot-toast';
+
+import { errorInterceptor, jwtInterceptor } from '@angular-auth/libs/web/auth/utils';
 import {
   CustomSerializer,
   ROOT_EFFECTS,
@@ -42,5 +41,6 @@ export const appConfig: ApplicationConfig = {
     provideAppInitializer(),
     provideHttpClient(withInterceptors([jwtInterceptor, errorInterceptor])),
     provideAppConfig(environment),
+    provideHotToastConfig(),
   ],
 };
