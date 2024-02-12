@@ -1,16 +1,10 @@
 <div class="flex flex-col items-center gap-8 py-16 px-4">
-  <p class="text-2xl font-bold text-center">
-    Inicia sesión en <span>AngularAuth</span>
-  </p>
+  <p class="text-2xl font-bold text-center">Inicia sesión en <span>AngularAuth</span></p>
 
   <div class="flex flex-col w-full gap-4">
     <div class="flex flex-col sm:flex-row gap-4 w-full">
-      <button class="btn flex-shrink w-full" (click)="googleLogin.emit()">
-        Iniciar sesión con Google
-      </button>
-      <button class="btn flex-shrink w-full" (click)="githubLogin.emit()">
-        Iniciar sesión con Github
-      </button>
+      <button class="btn flex-shrink w-full" (click)="googleLogin.emit()">Iniciar sesión con Google</button>
+      <button class="btn flex-shrink w-full" (click)="githubLogin.emit()">Iniciar sesión con Github</button>
     </div>
 
     <p>
@@ -21,28 +15,22 @@
 
   <div class="divider">O usa tu correo electrónico</div>
 
-  <form
-    [formGroup]="form"
-    class="flex flex-col gap-4 w-full"
-    (submit)="handleSubmit($event)"
-  >
-    <label class="form-control w-full">
-      <input
-        type="email"
-        placeholder="Correo electrónico"
-        class="input input-bordered w-full"
-        formControlName="email"
-      />
-    </label>
+  <form [formGroup]="form" class="flex flex-col gap-4 w-full" (submit)="onSubmit()">
+    <aa-input
+      ngDefaultControl
+      [type]="'email'"
+      [placeholder]="'Correo electrónico'"
+      [formControlName]="'email'"
+      [formControl]="email"
+    ></aa-input>
 
-    <label class="form-control w-full">
-      <input
-        type="password"
-        placeholder="Contraseña"
-        class="input input-bordered w-full"
-        formControlName="password"
-      />
-    </label>
+    <aa-input
+      ngDefaultControl
+      [type]="'password'"
+      [placeholder]="'Contraseña'"
+      [formControlName]="'password'"
+      [formControl]="password"
+    ></aa-input>
 
     <button class="btn btn-primary">Iniciar sesión</button>
   </form>
@@ -54,9 +42,7 @@
     </p>
 
     <p class="text-center">
-      <a class="link link-primary" routerLink="/recover-password">
-        ¿Olvidaste tu contraseña?
-      </a>
+      <a class="link link-primary" routerLink="/recover-password"> ¿Olvidaste tu contraseña? </a>
     </p>
   </div>
 </div>

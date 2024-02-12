@@ -1,18 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { InputComponent } from '@angular-auth/libs/web/shared/ui';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 type LoginForm = {
@@ -23,7 +11,7 @@ type LoginForm = {
 @Component({
   selector: 'aa-login-form',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, InputComponent],
   templateUrl: './login-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -46,17 +34,24 @@ export class LoginFormComponent implements OnInit {
   private initForm(): void {
     this.form = this.fb.group<LoginForm>({
       email: this.fb.control('', [Validators.required, Validators.email]),
-      password: this.fb.control('', [Validators.required]),
+      password: this.fb.control('', [Validators.required, Validators.minLength(8)]),
     });
   }
 
-  handleSubmit(event: SubmitEvent): void {
-    event.preventDefault();
-
+  onSubmit(): void {
     if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
 
     this.submitForm.emit(this.form.getRawValue());
+  }
+
+  get email(): FormControl<string> {
+    return this.form?.get('email') as FormControl<string>;
+  }
+
+  get password(): FormControl<string> {
+    return this.form?.get('password') as FormControl<string>;
   }
 }
