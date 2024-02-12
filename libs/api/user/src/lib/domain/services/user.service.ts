@@ -1,9 +1,4 @@
-import {
-  ConflictException,
-  Inject,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { SecurityConfigKeys } from '@angular-auth/libs/api/core';
@@ -21,7 +16,7 @@ export class UserService implements UserDriverPort {
     @Inject(UserDrivenAdapter)
     private readonly userDrivenPort: UserDrivenPort,
     private readonly countryService: CountryService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
   ) {}
 
   async createUser(user: CreateUserDTO): Promise<User> {
@@ -39,10 +34,11 @@ export class UserService implements UserDriverPort {
       throw new NotFoundException('Country not found.');
     }
 
-    const userData = await this.encryptUserPassword(user);
+    const password = await this.encryptUserPassword(user);
 
     const { id: userId } = await this.userDrivenPort.createUser({
-      ...userData,
+      ...user,
+      password,
       country: countryData,
     });
 
@@ -53,18 +49,20 @@ export class UserService implements UserDriverPort {
     return this.userDrivenPort.createUserFromGoogle(user);
   }
 
-  private async encryptUserPassword(
-    user: CreateUserDTO
-  ): Promise<CreateUserDTO> {
+  private async encryptUserPassword(user: CreateUserDTO): Promise<string> {
     const { password } = user;
     const hashSalt = this.configService.get(SecurityConfigKeys.HASH_SALT);
-    return {
-      ...user,
-      password: await hash(password, hashSalt),
-    };
+    return hash(password, hashSalt);
   }
 
   async updateUser(id: number, user: UpdateUserDTO): Promise<User> {
+    if (user.password) {
+      user = {
+        ...user,
+        password: await this.encryptUserPassword(user),
+      };
+    }
+
     const { affected } = await this.userDrivenPort.updateUser(id, user);
 
     if (affected === 0) {
