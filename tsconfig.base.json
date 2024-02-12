@@ -20,51 +20,25 @@
       "@angular-auth/libs/api/database": ["libs/api/database/src/index.ts"],
       "@angular-auth/libs/api/user": ["libs/api/user/src/index.ts"],
       "@angular-auth/libs/common": ["libs/common/src/index.ts"],
-      "@angular-auth/libs/web/auth/data-access/store": [
-        "libs/web/auth/data-access/store/src/index.ts"
-      ],
-      "@angular-auth/libs/web/auth/feature/login": [
-        "libs/web/auth/feature/login/src/index.ts"
-      ],
-      "@angular-auth/libs/web/auth/feature/redirect": [
-        "libs/web/auth/feature/redirect/src/index.ts"
-      ],
-      "@angular-auth/libs/web/auth/feature/register": [
-        "libs/web/auth/feature/register/src/index.ts"
-      ],
-      "@angular-auth/libs/web/auth/ui/login-form": [
-        "libs/web/auth/ui/login-form/src/index.ts"
-      ],
-      "@angular-auth/libs/web/auth/ui/register-form": [
-        "libs/web/auth/ui/register-form/src/index.ts"
-      ],
+      "@angular-auth/libs/web/auth/data-access/store": ["libs/web/auth/data-access/store/src/index.ts"],
+      "@angular-auth/libs/web/auth/feature/login": ["libs/web/auth/feature/login/src/index.ts"],
+      "@angular-auth/libs/web/auth/feature/redirect": ["libs/web/auth/feature/redirect/src/index.ts"],
+      "@angular-auth/libs/web/auth/feature/register": ["libs/web/auth/feature/register/src/index.ts"],
+      "@angular-auth/libs/web/auth/ui/login-form": ["libs/web/auth/ui/login-form/src/index.ts"],
+      "@angular-auth/libs/web/auth/ui/register-form": ["libs/web/auth/ui/register-form/src/index.ts"],
       "@angular-auth/libs/web/auth/utils": ["libs/web/auth/utils/src/index.ts"],
-      "@angular-auth/libs/web/shared/data-access/api": [
-        "libs/web/shared/data-access/api/src/index.ts"
-      ],
+      "@angular-auth/libs/web/shared/data-access/api": ["libs/web/shared/data-access/api/src/index.ts"],
       "@angular-auth/libs/web/shared/data-access/local-storage": [
         "libs/web/shared/data-access/local-storage/src/index.ts"
       ],
-      "@angular-auth/libs/web/shared/data-access/store": [
-        "libs/web/shared/data-access/store/src/index.ts"
-      ],
+      "@angular-auth/libs/web/shared/data-access/store": ["libs/web/shared/data-access/store/src/index.ts"],
       "@angular-auth/libs/web/shared/ui": ["libs/web/shared/ui/src/index.ts"],
-      "@angular-auth/libs/web/shared/utils": [
-        "libs/web/shared/utils/src/index.ts"
-      ],
+      "@angular-auth/libs/web/shared/utils": ["libs/web/shared/utils/src/index.ts"],
       "@angular-auth/web/home/feature": ["libs/web/home/feature/src/index.ts"],
-      "@angular-auth/web/shell/feature": [
-        "libs/web/shell/feature/src/index.ts"
-      ],
-      "@angular-auth/web/shell/ui/footer": [
-        "libs/web/shell/ui/footer/src/index.ts"
-      ],
-      "@angular-auth/web/shell/ui/header": [
-        "libs/web/shell/ui/header/src/index.ts"
-      ],
-      "@angular-auth/web/shell/ui/layout": [
-        "libs/web/shell/ui/layout/src/index.ts"
-      ]
+      "@angular-auth/web/shell/feature": ["libs/web/shell/feature/src/index.ts"],
+      "@angular-auth/web/shell/ui/footer": ["libs/web/shell/ui/footer/src/index.ts"],
+      "@angular-auth/web/shell/ui/header": ["libs/web/shell/ui/header/src/index.ts"],
+      "@angular-auth/web/shell/ui/layout": ["libs/web/shell/ui/layout/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
