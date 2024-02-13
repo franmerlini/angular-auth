@@ -83,15 +83,9 @@
       ></aa-select>
     </div>
 
-    <div class="form-control">
-      <label class="label cursor-pointer">
-        <span class="label-text">
-          Acepto los
-          <a class="link link-primary" routerLink="">Términos y condiciones</a>
-        </span>
-        <input type="checkbox" class="checkbox" formControlName="acceptTerms" />
-      </label>
-    </div>
+    <aa-checkbox ngDefaultControl [formControlName]="'acceptTerms'" [formControl]="acceptTerms">
+      Acepto los <a class="link link-primary" routerLink="">Términos y condiciones</a>
+    </aa-checkbox>
 
     <button class="btn btn-primary">Registrarme</button>
   </form>
