@@ -5,16 +5,8 @@ import { Store } from '@ngrx/store';
 
 import { EMPTY, Observable, catchError, of, switchMap, tap } from 'rxjs';
 
-import {
-  AuthCredentials,
-  AuthUrlsEnum,
-  CreateUserDTO,
-  User,
-} from '@angular-auth/libs/common';
-import {
-  AuthService,
-  UserService,
-} from '@angular-auth/libs/web/shared/data-access/api';
+import { AuthCredentials, AuthUrlsEnum, CreateUserDTO, User } from '@angular-auth/libs/common';
+import { AuthService, UserService } from '@angular-auth/libs/web/shared/data-access/api';
 import { LocalStorageService } from '@angular-auth/libs/web/shared/data-access/local-storage';
 import { RouterActions } from '@angular-auth/libs/web/shared/data-access/store';
 
@@ -48,44 +40,30 @@ export class AuthStore extends ComponentStore<AuthState> {
   readonly isAuthenticated$ = this.select((state) => state.isAuthenticated);
 
   private loadToken(): void {
-    const accessToken = LocalStorageService.getItem(
-      AuthKeysEnum.ACCESS_TOKEN_KEY
-    );
+    const accessToken = LocalStorageService.getItem(AuthKeysEnum.ACCESS_TOKEN_KEY);
     this.patchState({ isAuthenticated: !!accessToken });
   }
 
-  readonly googleAuth = this.effect((_: Observable<void>) =>
-    _.pipe(tap(() => this.authService.googleAuth()))
+  readonly googleAuth = this.effect((_: Observable<void>) => _.pipe(tap(() => this.authService.googleAuth())));
+
+  readonly login = this.effect((credentials$: Observable<{ email: string; password: string }>) =>
+    credentials$.pipe(
+      switchMap(({ email, password }) =>
+        this.authService.login(email, password).pipe(
+          tap(({ userId, accessToken, refreshToken }) => this.setAuthState(userId, accessToken, refreshToken)),
+          catchError((error) => of(this.patchState({ error }))),
+        ),
+      ),
+    ),
   );
 
-  readonly login = this.effect(
-    (credentials$: Observable<{ email: string; password: string }>) =>
-      credentials$.pipe(
-        switchMap(({ email, password }) =>
-          this.authService.login(email, password).pipe(
-            tap(({ userId, accessToken, refreshToken }) =>
-              this.setAuthState(userId, accessToken, refreshToken)
-            ),
-            catchError((error) => of(this.patchState({ error })))
-          )
-        )
-      )
+  readonly loginWithOAuth = this.effect((credentials$: Observable<AuthCredentials>) =>
+    credentials$.pipe(
+      tap(({ userId, accessToken, refreshToken }) => this.setAuthState(userId, accessToken, refreshToken)),
+    ),
   );
 
-  readonly loginWithOAuth = this.effect(
-    (credentials$: Observable<AuthCredentials>) =>
-      credentials$.pipe(
-        tap(({ userId, accessToken, refreshToken }) =>
-          this.setAuthState(userId, accessToken, refreshToken)
-        )
-      )
-  );
-
-  private setAuthState(
-    userId: number,
-    accessToken: string,
-    refreshToken: string
-  ): void {
+  private setAuthState(userId: number, accessToken: string, refreshToken: string): void {
     this.patchState({
       userId,
       isAuthenticated: true,
@@ -103,10 +81,10 @@ export class AuthStore extends ComponentStore<AuthState> {
       switchMap((user) =>
         this.userService.createUser(user).pipe(
           tap(() => this.store.dispatch(RouterActions.go(['/login']))),
-          catchError((error) => of(this.patchState({ error })))
-        )
-      )
-    )
+          catchError((error) => of(this.patchState({ error }))),
+        ),
+      ),
+    ),
   );
 
   readonly logout = this.effect((_: Observable<void>) =>
@@ -121,8 +99,8 @@ export class AuthStore extends ComponentStore<AuthState> {
         LocalStorageService.removeItem(AuthKeysEnum.ACCESS_TOKEN_KEY);
         LocalStorageService.removeItem(AuthKeysEnum.REFRESH_TOKEN_KEY);
         this.store.dispatch(RouterActions.go(['/login']));
-      })
-    )
+      }),
+    ),
   );
 
   readonly loadUser = this.effect((_: Observable<void>) =>
@@ -137,12 +115,10 @@ export class AuthStore extends ComponentStore<AuthState> {
             this.patchState({ user, userLoaded: true });
             this.store.dispatch(RouterActions.go(['/']));
           }),
-          catchError((error) =>
-            of(this.patchState({ error, userLoaded: false }))
-          )
+          catchError((error) => of(this.patchState({ error, userLoaded: false }))),
         );
-      })
-    )
+      }),
+    ),
   );
 
   setTokens(accessToken: string, refreshToken: string) {
@@ -151,9 +127,7 @@ export class AuthStore extends ComponentStore<AuthState> {
   }
 
   addTokenToRequest(req: HttpRequest<unknown>) {
-    const token = req.url.endsWith(AuthUrlsEnum.REFRESH_TOKEN)
-      ? this.refreshToken
-      : this.accessToken;
+    const token = req.url.endsWith(AuthUrlsEnum.REFRESH_TOKEN) ? this.refreshToken : this.accessToken;
     return req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`,
