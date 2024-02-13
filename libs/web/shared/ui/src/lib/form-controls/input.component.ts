@@ -43,27 +43,11 @@ export class InputComponent implements DoCheck {
   private readonly cdr = inject(ChangeDetectorRef);
 
   ngDoCheck(): void {
-    this.errorMessage = this.getErrorMessage();
+    this.errorMessage = getErrorMessage(this.formControl);
     this.cdr.markForCheck();
   }
 
   get hasError(): boolean {
     return this.formControl.invalid && (this.formControl.touched || this.formControl.dirty);
-  }
-
-  private getErrorMessage(): string {
-    const errors = this.formControl.errors;
-
-    if (errors) {
-      for (const key of Object.keys(errors)) {
-        const value = errors[key];
-
-        if (Object.prototype.hasOwnProperty.call(errors, key)) {
-          return getErrorMessage(key, value);
-        }
-      }
-    }
-
-    return '';
   }
 }
