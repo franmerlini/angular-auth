@@ -8,6 +8,7 @@ const createErrorMessage = (errorKey: string, validationErrors: ValidationErrors
     minlength: `El campo debe tener más de ${validationErrors['requiredLength']} caracteres.`,
     min: `El campo debe ser mayor a ${validationErrors['min']}.`,
     max: `El campo debe ser menor a ${validationErrors['max']}.`,
+    notmatched: 'Las contraseñas no coinciden.',
   };
   return ERROR_MESSAGES[errorKey];
 };
