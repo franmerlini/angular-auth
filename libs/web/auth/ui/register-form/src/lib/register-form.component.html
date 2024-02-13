@@ -3,9 +3,7 @@
 
   <div class="flex flex-col w-full gap-4">
     <div class="flex flex-col sm:flex-row gap-4 w-full">
-      <button class="btn flex-shrink w-full" (click)="googleRegister.emit()">
-        Registrarme con Google
-      </button>
+      <button class="btn flex-shrink w-full" (click)="googleRegister.emit()">Registrarme con Google</button>
       <button class="btn flex-shrink w-full">Registrarme con Github</button>
     </div>
 
@@ -17,68 +15,72 @@
 
   <div class="divider">O usa tu correo electrónico</div>
 
-  <form
-    [formGroup]="form"
-    class="flex flex-col gap-4 w-full"
-    (submit)="register($event)"
-  >
+  <form [formGroup]="form" class="flex flex-col gap-4 w-full" (submit)="onSubmit()">
     <div class="flex flex-col sm:flex-row gap-4">
-      <input
-        type="text"
-        placeholder="Nombre"
-        class="input input-bordered w-full sm:w-1/2"
-        formControlName="firstName"
-      />
+      <aa-input
+        ngDefaultControl
+        [type]="'text'"
+        [placeholder]="'Nombre'"
+        [formControlName]="'firstName'"
+        [formControl]="firstName"
+        class="w-full sm:w-1/2"
+      ></aa-input>
 
-      <input
-        type="text"
-        placeholder="Apellido"
-        class="input input-bordered w-full sm:w-1/2"
-        formControlName="lastName"
-      />
+      <aa-input
+        ngDefaultControl
+        [type]="'text'"
+        [placeholder]="'Apellido'"
+        [formControlName]="'lastName'"
+        [formControl]="lastName"
+        class="w-full sm:w-1/2"
+      ></aa-input>
     </div>
 
-    <input
-      type="email"
-      placeholder="Correo electrónico"
-      class="input input-bordered w-full"
-      formControlName="email"
-    />
+    <aa-input
+      ngDefaultControl
+      [type]="'email'"
+      [placeholder]="'Correo electrónico'"
+      [formControlName]="'email'"
+      [formControl]="email"
+    ></aa-input>
 
     <div class="flex flex-col sm:flex-row gap-4">
-      <input
-        type="password"
-        placeholder="Contraseña"
-        class="input input-bordered w-full sm:w-1/2"
-        formControlName="password"
-      />
+      <aa-input
+        ngDefaultControl
+        [type]="'password'"
+        [placeholder]="'Contraseña'"
+        [formControlName]="'password'"
+        [formControl]="password"
+        class="w-full sm:w-1/2"
+      ></aa-input>
 
-      <input
-        type="password"
-        placeholder="Confirma tu contraseña"
-        class="input input-bordered w-full sm:w-1/2"
-        formControlName="confirmPassword"
-      />
+      <aa-input
+        ngDefaultControl
+        [type]="'password'"
+        [placeholder]="'Confirma tu contraseña'"
+        [formControlName]="'confirmPassword'"
+        [formControl]="confirmPassword"
+        class="w-full sm:w-1/2"
+      ></aa-input>
     </div>
 
     <div class="flex flex-col sm:flex-row gap-4">
-      <input
-        type="text"
-        placeholder="Ciudad"
-        class="input input-bordered w-full sm:w-1/2"
-        formControlName="city"
-      />
+      <aa-input
+        ngDefaultControl
+        [type]="'text'"
+        [placeholder]="'Ciudad'"
+        [formControlName]="'city'"
+        [formControl]="city"
+        class="w-full sm:w-1/2"
+      ></aa-input>
 
-      <select
-        class="select select-bordered w-full sm:w-1/2"
-        formControlName="country"
-      >
-        @for (country of countryList; track country.id; let i = $index) {
-        <option [value]="country.id" [selected]="i === 0" [disabled]="i === 0">
-          {{ country.name }}
-        </option>
-        }
-      </select>
+      <aa-select
+        ngDefaultControl
+        [list]="countryList"
+        [formControlName]="'country'"
+        [formControl]="country"
+        class="w-full sm:w-1/2"
+      ></aa-select>
     </div>
 
     <div class="form-control">

@@ -15,11 +15,11 @@ import { CountryFeature } from '@angular-auth/libs/web/shared/data-access/store'
   template: `
     <div class="min-h-screen flex justify-center items-center">
       @if (countries$ | async; as countries) {
-      <aa-register-form
-        [countryList]="countries"
-        (registerUser)="authStore.register($event)"
-        (googleRegister)="authStore.googleAuth($event)"
-      />
+        <aa-register-form
+          [countryList]="countries"
+          (register)="authStore.register($event)"
+          (googleRegister)="authStore.googleAuth($event)"
+        />
       }
     </div>
   `,
