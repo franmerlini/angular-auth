@@ -9,19 +9,12 @@ import {
   SimpleChanges,
   inject,
 } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 import { Country, CreateUserDTO } from '@angular-auth/libs/common';
 import { CheckboxComponent, InputComponent, SelectComponent } from '@angular-auth/libs/web/shared/ui';
+import { CustomValidators } from '@angular-auth/libs/web/shared/utils';
 import { JsonPipe } from '@angular/common';
 
 type RegisterForm = {
@@ -67,18 +60,18 @@ export class RegisterFormComponent implements OnChanges, OnInit {
   }
 
   private initForm(): void {
-    const passwordMatchingValidator: ValidatorFn = (): ValidationErrors | null => {
-      return this.password?.value === this.confirmPassword?.value ? null : { notmatched: true };
-    };
-
     this.form = this.fb.group<RegisterForm>({
       firstName: this.fb.control('', [Validators.required]),
       lastName: this.fb.control('', [Validators.required]),
       email: this.fb.control('', [Validators.email, Validators.required]),
       password: this.fb.control('', [Validators.required, Validators.minLength(8)]),
-      confirmPassword: this.fb.control('', [Validators.required, Validators.minLength(8), passwordMatchingValidator]),
+      confirmPassword: this.fb.control('', [
+        Validators.required,
+        Validators.minLength(8),
+        CustomValidators.passwordMatchingValidator(this.password, this.confirmPassword),
+      ]),
       city: this.fb.control('', [Validators.required]),
-      country: this.fb.control(0, [Validators.required]),
+      country: this.fb.control(0, [CustomValidators.requiredSelectValidator]),
       acceptTerms: this.fb.control(false, [Validators.requiredTrue]),
     });
   }
