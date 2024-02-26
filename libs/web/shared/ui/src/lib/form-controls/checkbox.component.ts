@@ -16,16 +16,22 @@ import { getErrorMessage } from '@angular-auth/libs/web/shared/utils';
   template: `
     <div class="form-control">
       <label class="label cursor-pointer">
-        <span data-testingId="checkbox-label" class="label-text">
+        <span data-testing-id="checkbox-label" class="label-text">
           <ng-content></ng-content>
         </span>
 
-        <input data-testingId="checkbox-input" type="checkbox" class="checkbox" [formControlName]="formControlName" />
+        <input
+          data-testing-id="checkbox-input"
+          type="checkbox"
+          class="checkbox"
+          [formControlName]="formControlName"
+          [class]="hasError ? 'checkbox-error' : ''"
+        />
       </label>
 
       @if (hasError && errorMessage) {
         <div class="label">
-          <span data-testingId="checkbox-error-label" class="label-text-alt text-red-500">{{ errorMessage }}</span>
+          <span data-testing-id="checkbox-error-label" class="text-error">{{ errorMessage }}</span>
         </div>
       }
     </div>

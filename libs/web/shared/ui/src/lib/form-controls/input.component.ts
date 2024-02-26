@@ -16,16 +16,17 @@ import { getErrorMessage } from '@angular-auth/libs/web/shared/utils';
   template: `
     <label class="form-control w-full">
       <input
+        data-testing-id="input"
         [type]="type"
         [placeholder]="placeholder"
         class="input input-bordered w-full"
         [formControlName]="formControlName"
-        [class]="hasError ? 'border-red-500 placeholder-red-500' : ''"
+        [class]="hasError ? 'input-error' : ''"
       />
 
       @if (hasError && errorMessage) {
         <div class="label">
-          <span class="label-text-alt text-red-500">{{ errorMessage }}</span>
+          <span data-testing-id="input-error-label" class="text-error">{{ errorMessage }}</span>
         </div>
       }
     </label>
