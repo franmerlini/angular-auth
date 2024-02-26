@@ -1,21 +1,10 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 import { Country, CreateUserDTO } from '@angular-auth/libs/common';
 import { CheckboxComponent, InputComponent, SelectComponent } from '@angular-auth/libs/web/shared/ui';
 import { CustomValidators } from '@angular-auth/libs/web/shared/utils';
-import { JsonPipe } from '@angular/common';
 
 type RegisterForm = {
   firstName: FormControl<string>;
@@ -31,11 +20,11 @@ type RegisterForm = {
 @Component({
   selector: 'aa-register-form',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, InputComponent, SelectComponent, CheckboxComponent, JsonPipe],
+  imports: [RouterLink, ReactiveFormsModule, InputComponent, SelectComponent, CheckboxComponent],
   templateUrl: './register-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterFormComponent implements OnChanges, OnInit {
+export class RegisterFormComponent implements OnInit {
   @Input({ required: true }) countryList!: Country[];
 
   @Output() register = new EventEmitter<CreateUserDTO>();
@@ -44,16 +33,6 @@ export class RegisterFormComponent implements OnChanges, OnInit {
   private readonly fb = inject(NonNullableFormBuilder);
 
   form!: FormGroup<RegisterForm>;
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['countryList'].currentValue) {
-      this.countryList.unshift({
-        id: 0,
-        name: 'País',
-        code: '',
-      });
-    }
-  }
 
   ngOnInit(): void {
     this.initForm();
