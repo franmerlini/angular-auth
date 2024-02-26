@@ -17,19 +17,24 @@ import { getErrorMessage } from '@angular-auth/libs/web/shared/utils';
   template: `
     <label class="form-control w-full">
       <select
+        data-testing-id="select"
         class="select select-bordered w-full"
         [formControlName]="formControlName"
-        [class]="hasError ? 'border-red-500 placeholder-red-500' : ''"
+        [class]="hasError ? 'select-error' : ''"
       >
-        @for (item of list; track item.id; let i = $index) {
-          <option [value]="item.id" [selected]="i === 0" [disabled]="i === 0">
+        <option data-testing-id="default-option" selected disabled value="0">
+          {{ placeholder }}
+        </option>
+        @for (item of list; track item.id) {
+          <option data-testing-id="option" [value]="item.id">
             {{ item.name }}
           </option>
         }
       </select>
+
       @if (hasError && errorMessage) {
         <div class="label">
-          <span class="label-text-alt text-red-500">{{ errorMessage }}</span>
+          <span data-testing-id="select-error-label" class="text-error">{{ errorMessage }}</span>
         </div>
       }
     </label>
@@ -38,7 +43,8 @@ import { getErrorMessage } from '@angular-auth/libs/web/shared/utils';
 })
 export class SelectComponent implements DoCheck {
   @Input({ required: true }) list: SelectItem[] = [];
-  @Input({ required: true }) formControlName = '';
+  @Input({ required: true }) placeholder!: string;
+  @Input({ required: true }) formControlName!: string;
   @Input({ required: true }) formControl!: FormControl;
 
   errorMessage = '';
