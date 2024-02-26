@@ -18,7 +18,7 @@ type LoginForm = {
 export class LoginFormComponent implements OnInit {
   @Output() googleLogin = new EventEmitter<void>();
   @Output() githubLogin = new EventEmitter<void>();
-  @Output() submitForm = new EventEmitter<{
+  @Output() login = new EventEmitter<{
     email: string;
     password: string;
   }>();
@@ -44,7 +44,7 @@ export class LoginFormComponent implements OnInit {
       return;
     }
 
-    this.submitForm.emit(this.form.getRawValue());
+    this.login.emit(this.form.getRawValue());
   }
 
   get email(): FormControl<string> {
