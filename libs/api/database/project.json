@@ -32,14 +32,14 @@
         "command": "docker-compose up -d"
       }
     },
-    "migration:generate": {
+    "mig:gen": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/api/database",
         "command": "typeorm-ts-node-commonjs -d ./src/lib/config/data-source.config.ts migration:generate ./migrations/init"
       }
     },
-    "migration:run": {
+    "mig:run": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/api/database",
