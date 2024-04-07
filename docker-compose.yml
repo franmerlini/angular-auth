@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  mysql_db:
+    image: mysql
+    container_name: angular_auth_mysql_db
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MYSQL_USER: ${NX_DB_USERNAME}
+      MYSQL_PASSWORD: ${NX_DB_PASSWORD}
+      MYSQL_DATABASE: ${NX_DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${NX_DB_ROOT_PASSWORD}
+    volumes:
+      - ./libs/api/database/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --init-file /docker-entrypoint-initdb.d/init.sql
+    ports:
+      - ${NX_DB_PORT}:3306
