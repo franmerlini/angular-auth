@@ -1,5 +1,5 @@
 export const securityConfig = () => ({
-  hashSalt: +process.env.NX_HASH_SALT,
+  hashSalt: Number(process.env.NX_HASH_SALT),
   jwtSecret: process.env.NX_JWT_SECRET,
   googleClientId: process.env.NX_GOOGLE_CLIENT_ID,
   googleClientSecret: process.env.NX_GOOGLE_CLIENT_SECRET,
