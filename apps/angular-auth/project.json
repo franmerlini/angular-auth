@@ -16,10 +16,7 @@
         "polyfills": ["zone.js"],
         "tsConfig": "apps/angular-auth/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/angular-auth/src/favicon.ico",
-          "apps/angular-auth/src/assets"
-        ],
+        "assets": ["apps/angular-auth/src/favicon.ico", "apps/angular-auth/src/assets"],
         "styles": ["apps/angular-auth/src/styles.scss"],
         "scripts": []
       },
@@ -69,8 +66,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
