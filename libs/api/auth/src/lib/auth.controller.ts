@@ -27,17 +27,15 @@ export class AuthController {
   @Public()
   @Get('google')
   @UseGuards(GoogleGuard)
-  async googleAuth(): Promise<void> {}
+  async googleAuth(): Promise<void> {
+    return;
+  }
 
   @Public()
   @Get('google/redirect')
   @UseGuards(GoogleGuard)
-  async googleAuthRedirect(
-    @Req() req: Request,
-    @Res() res: Response
-  ): Promise<void> {
-    const { userId, accessToken, refreshToken } =
-      await this.authService.generateCredentials(req.user);
+  async googleAuthRedirect(@Req() req: Request, @Res() res: Response): Promise<void> {
+    const { userId, accessToken, refreshToken } = await this.authService.generateCredentials(req.user);
 
     const redirectUrl = `http://localhost:4200/redirect?userId=${userId}&accessToken=${accessToken}&refreshToken=${refreshToken}`;
 
