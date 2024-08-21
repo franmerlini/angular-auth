@@ -1,0 +1,75 @@
+{
+  "name": "user-service",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/user-service/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/user-service",
+        "main": "apps/user-service/src/main.ts",
+        "tsConfig": "apps/user-service/tsconfig.app.json",
+        "assets": ["apps/user-service/src/assets"],
+        "webpackConfig": "apps/user-service/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "user-service:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "user-service:build:development"
+        },
+        "production": {
+          "buildTarget": "user-service:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/user-service/jest.config.ts"
+      }
+    },
+    "docker-compose:up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/user-service",
+        "command": "docker-compose up -d"
+      }
+    },
+    "mig:gen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/user-service",
+        "command": "typeorm-ts-node-commonjs -d ./src/app/adapters/driven/config/data-source.config.ts migration:generate ./db/migrations/init"
+      }
+    },
+    "mig:run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/user-service",
+        "command": "typeorm-ts-node-commonjs -d ./src/app/adapters/driven/config/data-source.config.ts migration:run"
+      }
+    }
+  }
+}
