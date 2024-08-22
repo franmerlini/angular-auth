@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 
-import { User } from '@angular-auth/libs/common';
+import { User } from '@angular-auth/libs/shared';
 
 import { CreateUserDTO, UpdateUserDTO, UserEntity } from '../../domain';
 import { UserDrivenPort } from '../../ports';

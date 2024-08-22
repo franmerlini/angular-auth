@@ -3,7 +3,7 @@ import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { Request, Response } from 'express';
 
 import { Public } from '@angular-auth/libs/api/shared';
-import { AuthCredentials } from '@angular-auth/libs/common';
+import { AuthCredentials } from '@angular-auth/libs/shared';
 
 import { AuthService } from './auth.service';
 import { GoogleGuard, LocalAuthGuard } from './guards';

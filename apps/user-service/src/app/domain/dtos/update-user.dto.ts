@@ -1,6 +1,6 @@
 import { IsEmail, IsEnum, IsOptional, IsString, ValidateNested } from 'class-validator';
 
-import { Role, RoleEnum } from '@angular-auth/libs/common';
+import { Role, RoleEnum } from '@angular-auth/libs/shared';
 
 import { CountryDTO } from './country.dto';
 

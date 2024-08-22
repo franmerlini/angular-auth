@@ -1,6 +1,6 @@
 import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 
-import { Country } from '@angular-auth/libs/common';
+import { Country } from '@angular-auth/libs/shared';
 
 import { CountryDrivenPort, CountryDriverPort } from '../../ports';
 import { CreateCountryDTO, UpdateCountryDTO } from '../dtos';

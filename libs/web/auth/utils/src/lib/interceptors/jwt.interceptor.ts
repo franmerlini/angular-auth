@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { EMPTY } from 'rxjs';
 
-import { AuthUrlsEnum, ControllersEnum } from '@angular-auth/libs/common';
+import { AuthUrlsEnum, ControllersEnum } from '@angular-auth/libs/shared';
 import { AuthStore } from '@angular-auth/libs/web/auth/data-access/store';
 import { RouterActions } from '@angular-auth/libs/web/shared/data-access/store';
 

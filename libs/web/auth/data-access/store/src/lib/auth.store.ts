@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { EMPTY, Observable, catchError, of, switchMap, tap } from 'rxjs';
 
-import { AuthCredentials, AuthUrlsEnum, CreateUserDTO, User } from '@angular-auth/libs/common';
+import { AuthCredentials, AuthUrlsEnum, CreateUserDTO, User } from '@angular-auth/libs/shared';
 import { AuthService, UserService } from '@angular-auth/libs/web/shared/data-access/api';
 import { LocalStorageService } from '@angular-auth/libs/web/shared/data-access/local-storage';
 import { RouterActions } from '@angular-auth/libs/web/shared/data-access/store';

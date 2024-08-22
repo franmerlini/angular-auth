@@ -6,7 +6,7 @@ import { compare } from 'bcrypt';
 
 import { firstValueFrom } from 'rxjs';
 
-import { AuthCredentials, JwtPayload, User } from '@angular-auth/libs/common';
+import { AuthCredentials, JwtPayload, User } from '@angular-auth/libs/shared';
 
 @Injectable()
 export class AuthService {

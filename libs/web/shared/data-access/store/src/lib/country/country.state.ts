@@ -1,7 +1,7 @@
 import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createFeature, createReducer, on } from '@ngrx/store';
 
-import { Country } from '@angular-auth/libs/common';
+import { Country } from '@angular-auth/libs/shared';
 import { CountryActions } from './country.actions';
 
 export const countryFeatureKey = 'country';
@@ -35,14 +35,14 @@ const reducer = createReducer(
       loading: false,
       loaded: true,
       error: null,
-    })
+    }),
   ),
   on(CountryActions.loadCountriesFailure, (state, { error }) => ({
     ...state,
     loading: false,
     loaded: false,
     error,
-  }))
+  })),
 );
 
 export const CountryFeature = createFeature({

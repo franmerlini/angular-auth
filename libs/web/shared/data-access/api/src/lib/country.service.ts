@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { Country } from '@angular-auth/libs/common';
+import { Country } from '@angular-auth/libs/shared';
 import { APP_CONFIG } from '@angular-auth/libs/web/shared/utils';
 
 @Injectable()

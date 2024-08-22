@@ -19,7 +19,7 @@
       "@angular-auth/libs/api/database": ["libs/api/database/src/index.ts"],
       "@angular-auth/libs/api/shared": ["libs/api/shared/src/index.ts"],
       "@angular-auth/libs/api/user": ["libs/api/user/src/index.ts"],
-      "@angular-auth/libs/common": ["libs/common/src/index.ts"],
+      "@angular-auth/libs/shared": ["libs/shared/src/index.ts"],
       "@angular-auth/libs/web/auth/data-access/store": ["libs/web/auth/data-access/store/src/index.ts"],
       "@angular-auth/libs/web/auth/feature/login": ["libs/web/auth/feature/login/src/index.ts"],
       "@angular-auth/libs/web/auth/feature/redirect": ["libs/web/auth/feature/redirect/src/index.ts"],

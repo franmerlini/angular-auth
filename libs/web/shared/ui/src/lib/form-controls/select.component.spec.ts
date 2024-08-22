@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { ControlContainer, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { SelectItem } from '@angular-auth/libs/common';
+import { SelectItem } from '@angular-auth/libs/shared';
 import { SelectComponent } from './select.component';
 
 describe('selectComponent', () => {

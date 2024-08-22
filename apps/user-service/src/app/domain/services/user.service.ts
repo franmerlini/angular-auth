@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 
 import { hash } from 'bcrypt';
 
-import { User } from '@angular-auth/libs/common';
+import { User } from '@angular-auth/libs/shared';
 
 import { UserDrivenPort, UserDriverPort } from '../../ports';
 import { CreateUserDTO, UpdateUserDTO } from '../dtos';

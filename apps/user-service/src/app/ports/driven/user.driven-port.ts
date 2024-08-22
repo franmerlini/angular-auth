@@ -1,6 +1,6 @@
 import { DeleteResult, UpdateResult } from 'typeorm';
 
-import { User } from '@angular-auth/libs/common';
+import { User } from '@angular-auth/libs/shared';
 
 import { CreateUserDTO, UpdateUserDTO } from '../../domain';
 

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { DeleteResult, UpdateResult } from 'typeorm';
 
-import { Country } from '@angular-auth/libs/common';
+import { Country } from '@angular-auth/libs/shared';
 
 import { CountryEntity, CreateCountryDTO, UpdateCountryDTO } from '../../domain';
 import { CountryDrivenPort } from '../../ports';

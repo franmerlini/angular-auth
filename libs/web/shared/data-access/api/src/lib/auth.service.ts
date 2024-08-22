@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { AuthCredentials, AuthUrlsEnum } from '@angular-auth/libs/common';
+import { AuthCredentials, AuthUrlsEnum } from '@angular-auth/libs/shared';
 import { APP_CONFIG } from '@angular-auth/libs/web/shared/utils';
 
 @Injectable({
@@ -18,15 +18,10 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<AuthCredentials> {
-    return this.http.post<AuthCredentials>(
-      `${this.appConfig.baseURL}${AuthUrlsEnum.LOGIN}`,
-      { email, password }
-    );
+    return this.http.post<AuthCredentials>(`${this.appConfig.baseURL}${AuthUrlsEnum.LOGIN}`, { email, password });
   }
 
   refreshToken(): Observable<AuthCredentials> {
-    return this.http.get<AuthCredentials>(
-      `${this.appConfig.baseURL}${AuthUrlsEnum.REFRESH_TOKEN}`
-    );
+    return this.http.get<AuthCredentials>(`${this.appConfig.baseURL}${AuthUrlsEnum.REFRESH_TOKEN}`);
   }
 }

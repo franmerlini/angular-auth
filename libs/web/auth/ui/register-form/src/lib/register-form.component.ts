@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-import { Country, CreateUserDTO } from '@angular-auth/libs/common';
+import { Country, CreateUserDTO } from '@angular-auth/libs/shared';
 import { CheckboxComponent, InputComponent, SelectComponent } from '@angular-auth/libs/web/shared/ui';
 import { CustomValidators } from '@angular-auth/libs/web/shared/utils';
 

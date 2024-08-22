@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
 
 import { Public } from '@angular-auth/libs/api/shared';
-import { Country } from '@angular-auth/libs/common';
+import { Country } from '@angular-auth/libs/shared';
 
 import { CountryService, CreateCountryDTO, UpdateCountryDTO } from '../../domain';
 import { CountryDriverPort } from '../../ports';

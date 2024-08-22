@@ -4,7 +4,7 @@ import { PassportStrategy } from '@nestjs/passport';
 
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
-import { JwtPayload, User } from '@angular-auth/libs/common';
+import { JwtPayload, User } from '@angular-auth/libs/shared';
 
 import { AuthService } from '../auth.service';
 import { EnvironmentVariables } from '../model';

@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 't
 
 import { Exclude } from 'class-transformer';
 
-import { Role, RoleEnum, User } from '@angular-auth/libs/common';
+import { Role, RoleEnum, User } from '@angular-auth/libs/shared';
 
 import { CountryEntity } from './country.entity';
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, Input, inject } from '@angular/core';
 import { ControlContainer, FormControl, ReactiveFormsModule } from '@angular/forms';
 
-import { SelectItem } from '@angular-auth/libs/common';
+import { SelectItem } from '@angular-auth/libs/shared';
 import { getErrorMessage } from '@angular-auth/libs/web/shared/utils';
 
 @Component({

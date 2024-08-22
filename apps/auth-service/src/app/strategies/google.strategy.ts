@@ -7,7 +7,7 @@ import { Profile, Strategy, VerifyCallback } from 'passport-google-oauth20';
 
 import { firstValueFrom } from 'rxjs';
 
-import { User } from '@angular-auth/libs/common';
+import { User } from '@angular-auth/libs/shared';
 
 import { AuthService } from '../auth.service';
 import { EnvironmentVariables } from '../model';
