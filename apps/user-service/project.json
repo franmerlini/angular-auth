@@ -57,18 +57,37 @@
         "command": "docker-compose up -d"
       }
     },
+    "build-migration-config": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/user-service",
+        "main": "apps/user-service/src/main.ts",
+        "tsConfig": "apps/user-service/tsconfig.app.json",
+        "webpackConfig": "apps/user-service/webpack.config.js",
+        "additionalEntryPoints": [
+          {
+            "entryName": "data-source",
+            "entryPath": "apps/user-service/src/app/data-source.ts"
+          }
+        ]
+      }
+    },
     "mig:gen": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "apps/user-service",
-        "command": "typeorm-ts-node-commonjs -d ./src/app/adapters/driven/config/data-source.config.ts migration:generate ./db/migrations/init"
-      }
+        "cwd": ".",
+        "command": "typeorm -d dist/apps/user-service/data-source.js migration:generate -o dist/apps/user-service/migrations/init"
+      },
+      "dependsOn": ["build-migration-config"]
     },
     "mig:run": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "apps/user-service",
-        "command": "typeorm-ts-node-commonjs -d ./src/app/adapters/driven/config/data-source.config.ts migration:run"
+        "cwd": ".",
+        "command": "typeorm -d dist/apps/user-service/data-source.js migration:run"
       }
     }
   }
