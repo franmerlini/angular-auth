@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { CountryController, CountryDrivenAdapter, UserController, UserDrivenAdapter } from './adapters';
 import { dataSourceOptions } from './data-source';
-import { CountryService, UserService } from './domain';
+import { CountryEntity, CountryService, UserEntity, UserService } from './domain';
 
 @Module({
   controllers: [UserController, CountryController],
@@ -13,6 +13,7 @@ import { CountryService, UserService } from './domain';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot(dataSourceOptions),
+    TypeOrmModule.forFeature([UserEntity, CountryEntity]),
   ],
   providers: [
     UserService,
