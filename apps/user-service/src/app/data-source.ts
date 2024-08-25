@@ -1,5 +1,6 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+
+import { CountryEntity, UserEntity } from './domain';
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'mysql',
@@ -8,12 +9,8 @@ export const dataSourceOptions: DataSourceOptions = {
   username: process.env.NX_DB_USERNAME,
   password: process.env.NX_DB_PASSWORD,
   database: process.env.NX_DB_NAME,
-  entities: [__dirname + '/../../../domain/entities/*.entity{.ts,.js}'],
-  migrations: [__dirname + '/../../../../migrations/*{.ts,.js}'],
-  synchronize: true,
-  migrationsRun: true,
-  logging: false,
-  namingStrategy: new SnakeNamingStrategy(),
+  entities: [CountryEntity, UserEntity],
+  migrations: [__dirname + '/migrations/*{.ts,.js}'],
 };
 
 export const dataSource = new DataSource(dataSourceOptions);

@@ -2,13 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import {
-  CountryController,
-  CountryDrivenAdapter,
-  dataSourceOptions,
-  UserController,
-  UserDrivenAdapter,
-} from './adapters';
+import { CountryController, CountryDrivenAdapter, UserController, UserDrivenAdapter } from './adapters';
+import { dataSourceOptions } from './data-source';
 import { CountryService, UserService } from './domain';
 
 @Module({
@@ -18,7 +13,6 @@ import { CountryService, UserService } from './domain';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot(dataSourceOptions),
-    // TypeOrmModule.forFeature([UserEntity, CountryEntity]),
   ],
   providers: [
     UserService,
