@@ -1,6 +1,8 @@
 declare namespace NodeJS {
   interface ProcessEnv {
     // server
+    NX_API_PREFIX: string;
+    NX_SERVER_PROTOCOL: string;
     NX_SERVER_PORT: string;
     NX_SERVER_HOST: string;
 
