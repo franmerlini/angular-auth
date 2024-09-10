@@ -3,16 +3,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 
+import { CreateUserDto, UpdateUserDto } from '@angular-auth/libs/api/shared';
 import { User } from '@angular-auth/libs/shared';
 
-import { CreateUserDTO, UpdateUserDTO, UserEntity } from '../../domain';
+import { UserEntity } from '../../domain';
 import { UserDrivenPort } from '../../ports';
 
 @Injectable()
 export class UserDrivenAdapter implements UserDrivenPort {
   constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<User>) {}
 
-  createUser(user: CreateUserDTO): Promise<User> {
+  createUser(user: CreateUserDto): Promise<User> {
     return this.userRepository.save(user);
   }
 
@@ -20,7 +21,7 @@ export class UserDrivenAdapter implements UserDrivenPort {
     return this.userRepository.save(user);
   }
 
-  updateUser(id: number, user: UpdateUserDTO): Promise<UpdateResult> {
+  updateUser(id: number, user: UpdateUserDto): Promise<UpdateResult> {
     return this.userRepository.update(id, user);
   }
 

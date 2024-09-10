@@ -1,11 +1,10 @@
+import { CreateUserDto, UpdateUserDto } from '@angular-auth/libs/api/shared';
 import { User } from '@angular-auth/libs/shared';
 
-import { CreateUserDTO, UpdateUserDTO } from '../../domain';
-
 export interface UserDriverPort {
-  createUser(user: CreateUserDTO): Promise<User>;
+  createUser(user: CreateUserDto): Promise<User>;
   createUserFromGoogle(user: Partial<User>): Promise<User>;
-  updateUser(id: number, user: UpdateUserDTO): Promise<User>;
+  updateUser(id: number, user: UpdateUserDto): Promise<User>;
   deleteUser(id: number): Promise<void>;
   getUser(id: number): Promise<User>;
   getUsers(): Promise<User[]>;

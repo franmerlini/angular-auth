@@ -3,9 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { DeleteResult, UpdateResult } from 'typeorm';
 
+import { CreateCountryDto, UpdateCountryDto } from '@angular-auth/libs/api/shared';
 import { Country } from '@angular-auth/libs/shared';
 
-import { CountryEntity, CreateCountryDTO, UpdateCountryDTO } from '../../domain';
+import { CountryEntity } from '../../domain';
 import { CountryDrivenPort } from '../../ports';
 import { CountryRepository } from './repositories';
 
@@ -13,11 +14,11 @@ import { CountryRepository } from './repositories';
 export class CountryDrivenAdapter implements CountryDrivenPort {
   constructor(@InjectRepository(CountryEntity) private readonly countryRepository: CountryRepository) {}
 
-  createCountry(country: CreateCountryDTO): Promise<Country> {
+  createCountry(country: CreateCountryDto): Promise<Country> {
     return this.countryRepository.save(country);
   }
 
-  updateCountry(id: number, country: UpdateCountryDTO): Promise<UpdateResult> {
+  updateCountry(id: number, country: UpdateCountryDto): Promise<UpdateResult> {
     return this.countryRepository.update(id, country);
   }
 
