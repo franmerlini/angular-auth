@@ -1,3 +1,4 @@
+import { HttpRequest } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
 import { ComponentStore } from '@ngrx/component-store';
@@ -5,12 +6,12 @@ import { Store } from '@ngrx/store';
 
 import { EMPTY, Observable, catchError, of, switchMap, tap } from 'rxjs';
 
-import { AuthCredentials, AuthUrlsEnum, CreateUserDTO, User } from '@angular-auth/libs/shared';
+import { CreateUserDto } from '@angular-auth/libs/api/shared';
+import { AuthCredentials, AuthUrlsEnum, User } from '@angular-auth/libs/shared';
 import { AuthService, UserService } from '@angular-auth/libs/web/shared/data-access/api';
 import { LocalStorageService } from '@angular-auth/libs/web/shared/data-access/local-storage';
 import { RouterActions } from '@angular-auth/libs/web/shared/data-access/store';
 
-import { HttpRequest } from '@angular/common/http';
 import { AuthKeysEnum } from './auth-keys.enum';
 
 export interface AuthState {
@@ -76,7 +77,7 @@ export class AuthStore extends ComponentStore<AuthState> {
     this.loadUser();
   }
 
-  readonly register = this.effect((credentials$: Observable<CreateUserDTO>) =>
+  readonly register = this.effect((credentials$: Observable<CreateUserDto>) =>
     credentials$.pipe(
       switchMap((user) =>
         this.userService.createUser(user).pipe(
