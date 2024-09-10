@@ -1,38 +1,43 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
+import { Controller, Inject } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
-import { Public } from '@angular-auth/libs/api/shared';
+import { CreateUserDto, UpdateUserDto, UserClientPatternsEnum } from '@angular-auth/libs/api/shared';
 import { User } from '@angular-auth/libs/shared';
 
-import { CreateUserDTO, UpdateUserDTO, UserService } from '../../domain';
+import { UserService } from '../../domain';
 import { UserDriverPort } from '../../ports';
 
-@Controller('user')
+@Controller()
 export class UserController {
   constructor(@Inject(UserService) private readonly userDriverPort: UserDriverPort) {}
 
-  @Get(':id')
-  getUser(@Param('id') id: number): Promise<User> {
+  @MessagePattern(UserClientPatternsEnum.GET_USER)
+  getUser(@Payload() id: number): Promise<User> {
     return this.userDriverPort.getUser(id);
   }
 
-  @Get()
+  @MessagePattern(UserClientPatternsEnum.GET_USER_BY_EMAIL)
+  getUserByEmail(@Payload() email: string): Promise<User> {
+    return this.userDriverPort.getUserByEmail(email);
+  }
+
+  @MessagePattern(UserClientPatternsEnum.GET_USERS)
   getUsers(): Promise<User[]> {
     return this.userDriverPort.getUsers();
   }
 
-  @Public()
-  @Post()
-  createUser(@Body() body: CreateUserDTO): Promise<User> {
-    return this.userDriverPort.createUser(body);
+  @MessagePattern(UserClientPatternsEnum.CREATE_USER)
+  createUser(@Payload() createUserDto: CreateUserDto): Promise<User> {
+    return this.userDriverPort.createUser(createUserDto);
   }
 
-  @Put(':id')
-  updateUser(@Param('id') id: number, @Body() body: UpdateUserDTO): Promise<User> {
-    return this.userDriverPort.updateUser(id, body);
+  @MessagePattern(UserClientPatternsEnum.UPDATE_USER)
+  updateUser(@Payload() { id, updateUserDto }: { id: number; updateUserDto: UpdateUserDto }): Promise<User> {
+    return this.userDriverPort.updateUser(id, updateUserDto);
   }
 
-  @Delete(':id')
-  deleteUser(@Param('id') id: number): Promise<void> {
+  @MessagePattern(UserClientPatternsEnum.DELETE_USER)
+  deleteUser(@Payload() id: number): Promise<void> {
     return this.userDriverPort.deleteUser(id);
   }
 }

@@ -1,38 +1,40 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
+import { Controller, Inject } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
-import { Public } from '@angular-auth/libs/api/shared';
+import { CreateCountryDto, UpdateCountryDto, UserClientPatternsEnum } from '@angular-auth/libs/api/shared';
 import { Country } from '@angular-auth/libs/shared';
 
-import { CountryService, CreateCountryDTO, UpdateCountryDTO } from '../../domain';
+import { CountryService } from '../../domain';
 import { CountryDriverPort } from '../../ports';
 
-@Controller('country')
+@Controller()
 export class CountryController {
   constructor(@Inject(CountryService) private readonly countryDriverPort: CountryDriverPort) {}
 
-  @Get(':id')
-  getCountry(@Param('id') id: number): Promise<Country> {
+  @MessagePattern(UserClientPatternsEnum.GET_COUNTRY)
+  getCountry(@Payload() id: number): Promise<Country> {
     return this.countryDriverPort.getCountry(id);
   }
 
-  @Public()
-  @Get()
+  @MessagePattern(UserClientPatternsEnum.GET_COUNTRIES)
   getCountries(): Promise<Country[]> {
     return this.countryDriverPort.getCountries();
   }
 
-  @Post()
-  createCountry(@Body() body: CreateCountryDTO): Promise<Country> {
-    return this.countryDriverPort.createCountry(body);
+  @MessagePattern(UserClientPatternsEnum.CREATE_COUNTRY)
+  createCountry(@Payload() createCountryDto: CreateCountryDto): Promise<Country> {
+    return this.countryDriverPort.createCountry(createCountryDto);
   }
 
-  @Put(':id')
-  updateCountry(@Param('id') id: number, @Body() body: UpdateCountryDTO): Promise<Country> {
-    return this.countryDriverPort.updateCountry(id, body);
+  @MessagePattern(UserClientPatternsEnum.UPDATE_COUNTRY)
+  updateCountry(
+    @Payload() { id, updateCountryDto }: { id: number; updateCountryDto: UpdateCountryDto },
+  ): Promise<Country> {
+    return this.countryDriverPort.updateCountry(id, updateCountryDto);
   }
 
-  @Delete(':id')
-  deleteCountry(@Param('id') id: number): Promise<void> {
+  @MessagePattern(UserClientPatternsEnum.DELETE_COUNTRY)
+  deleteCountry(@Payload() id: number): Promise<void> {
     return this.countryDriverPort.deleteCountry(id);
   }
 }
