@@ -3,7 +3,8 @@ import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { CreateUserDTO, User } from '@angular-auth/libs/shared';
+import { CreateUserDto } from '@angular-auth/libs/api/shared';
+import { User } from '@angular-auth/libs/shared';
 import { APP_CONFIG } from '@angular-auth/libs/web/shared/utils';
 
 @Injectable({
@@ -14,7 +15,7 @@ export class UserService {
   private readonly appConfig = inject(APP_CONFIG);
   private readonly baseURL = `${this.appConfig.baseURL}/user`;
 
-  createUser(user: CreateUserDTO): Observable<User> {
+  createUser(user: CreateUserDto): Observable<User> {
     return this.http.post<User>(`${this.baseURL}`, user);
   }
 
