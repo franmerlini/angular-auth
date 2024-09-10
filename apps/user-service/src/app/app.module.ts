@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { CountryController, CountryDrivenAdapter, UserController, UserDrivenAdapter } from './adapters';
 import { dataSourceOptions } from './data-source';
-import { CountryEntity, CountryService, UserEntity, UserService } from './domain';
+import { CountryEntity, CountryService, TokenEnum, UserEntity, UserService } from './domain';
 
 @Module({
   controllers: [UserController, CountryController],
@@ -18,12 +18,12 @@ import { CountryEntity, CountryService, UserEntity, UserService } from './domain
   providers: [
     UserService,
     {
-      provide: 'foo',
+      provide: TokenEnum.UserDrivenAdapterToken,
       useClass: UserDrivenAdapter,
     },
     CountryService,
     {
-      provide: 'foo1',
+      provide: TokenEnum.CountryDrivenAdapterToken,
       useClass: CountryDrivenAdapter,
     },
   ],

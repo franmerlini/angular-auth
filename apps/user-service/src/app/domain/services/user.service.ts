@@ -3,22 +3,23 @@ import { ConfigService } from '@nestjs/config';
 
 import { hash } from 'bcrypt';
 
+import { CreateUserDto, UpdateUserDto } from '@angular-auth/libs/api/shared';
 import { User } from '@angular-auth/libs/shared';
 
 import { UserDrivenPort, UserDriverPort } from '../../ports';
-import { CreateUserDTO, UpdateUserDTO } from '../dtos';
+import { TokenEnum } from '../enums';
 import { EnvironmentVariables } from '../models';
 import { CountryService } from './country.service';
 
 @Injectable()
 export class UserService implements UserDriverPort {
   constructor(
-    @Inject('foo') private readonly userDrivenPort: UserDrivenPort,
+    @Inject(TokenEnum.UserDrivenAdapterToken) private readonly userDrivenPort: UserDrivenPort,
     private readonly countryService: CountryService,
     private readonly configService: ConfigService<EnvironmentVariables>,
   ) {}
 
-  async createUser(user: CreateUserDTO): Promise<User> {
+  async createUser(user: CreateUserDto): Promise<User> {
     const { email, country } = user;
 
     const existsUser = await this.userDrivenPort.getUserByEmail(email);
@@ -48,13 +49,13 @@ export class UserService implements UserDriverPort {
     return this.userDrivenPort.createUserFromGoogle(user);
   }
 
-  private async encryptUserPassword(user: CreateUserDTO): Promise<string> {
+  private async encryptUserPassword(user: CreateUserDto): Promise<string> {
     const { password } = user;
-    const hashSalt = this.configService.get('NX_HASH_SALT');
+    const hashSalt = Number(this.configService.get('NX_HASH_SALT'));
     return hash(password, hashSalt);
   }
 
-  async updateUser(id: number, user: UpdateUserDTO): Promise<User> {
+  async updateUser(id: number, user: UpdateUserDto): Promise<User> {
     if (user.password) {
       user = {
         ...user,

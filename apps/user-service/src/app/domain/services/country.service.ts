@@ -1,15 +1,16 @@
 import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 
+import { CreateCountryDto, UpdateCountryDto } from '@angular-auth/libs/api/shared';
 import { Country } from '@angular-auth/libs/shared';
 
 import { CountryDrivenPort, CountryDriverPort } from '../../ports';
-import { CreateCountryDTO, UpdateCountryDTO } from '../dtos';
+import { TokenEnum } from '../enums';
 
 @Injectable()
 export class CountryService implements CountryDriverPort {
-  constructor(@Inject('foo1') private readonly countryDrivenPort: CountryDrivenPort) {}
+  constructor(@Inject(TokenEnum.CountryDrivenAdapterToken) private readonly countryDrivenPort: CountryDrivenPort) {}
 
-  async createCountry(country: CreateCountryDTO): Promise<Country> {
+  async createCountry(country: CreateCountryDto): Promise<Country> {
     const { name } = country;
 
     const existsCountry = await this.countryDrivenPort.getCountryByName(name);
@@ -21,7 +22,7 @@ export class CountryService implements CountryDriverPort {
     return this.countryDrivenPort.createCountry(country);
   }
 
-  async updateCountry(id: number, country: UpdateCountryDTO): Promise<Country> {
+  async updateCountry(id: number, country: UpdateCountryDto): Promise<Country> {
     const { affected } = await this.countryDrivenPort.updateCountry(id, country);
 
     if (affected === 0) {
