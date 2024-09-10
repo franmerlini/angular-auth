@@ -7,7 +7,7 @@ import { PassportModule } from '@nestjs/passport';
 
 import { MicroservicesEnum } from '@angular-auth/libs/api/shared';
 
-import { AuthController } from './controllers';
+import { AuthController, CountryController, UserController } from './controllers';
 import { JwtAuthGuard } from './guards';
 import { EnvironmentVariables } from './models';
 import { GoogleStrategy, JwtStrategy } from './strategies';
@@ -52,7 +52,7 @@ import { GoogleStrategy, JwtStrategy } from './strategies';
       },
     ]),
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, UserController, CountryController],
   providers: [
     JwtStrategy,
     GoogleStrategy,
